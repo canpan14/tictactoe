@@ -1,5 +1,7 @@
 'use strict'
 
+const ui = require('./ui.js')
+
 // Player contructor
 const Player = function (id, name, boardMarker) {
   this.id = id
@@ -27,7 +29,7 @@ const changeTurns = function () {
   } else {
     currentPlayer = players[0]
   }
-  $('#playerTurnText').text(currentPlayer.name + '\'s turn')
+  ui.onTurnChange()
 }
 
 // Checks for win based on last play
