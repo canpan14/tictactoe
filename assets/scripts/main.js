@@ -1,20 +1,5 @@
 'use strict'
 
-$('#gameBoard').on('mouseup', function (event) {
-  // If gameover or cell is already filled, ignore
-  if (gameOver || event.target.innerHTML) {
-    return
-  }
-  event.target.innerHTML = currentPlayer.boardMarker
-  const cellClicked = event.target.attributes['data-pos'].value.split(',')
-  const r = parseInt(cellClicked[0])
-  const c = parseInt(cellClicked[1])
-  boardArray[r][c] = currentPlayer.id
-  if (!checkForWin(r, c)) {
-    changeTurns()
-  }
-})
-
 // Player contructor
 const Player = function (id, name, boardMarker) {
   this.id = id
@@ -107,6 +92,19 @@ const draw = function () {
   $('#playerTurnText').text('Draw!')
 }
 
+const isGameOver = () => gameOver
+
+const fillBox = function (event) {
+  event.target.innerHTML = currentPlayer.boardMarker
+  const cellClicked = event.target.attributes['data-pos'].value.split(',')
+  const r = parseInt(cellClicked[0])
+  const c = parseInt(cellClicked[1])
+  boardArray[r][c] = currentPlayer.id
+  if (!checkForWin(r, c)) {
+    changeTurns()
+  }
+}
+
 const initializeGame = function () {
   createPlayers()
   currentPlayer = players[0]
@@ -114,5 +112,7 @@ const initializeGame = function () {
 }
 
 module.exports = {
-  initializeGame
+  initializeGame,
+  isGameOver,
+  fillBox
 }

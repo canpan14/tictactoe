@@ -14,7 +14,9 @@ $(() => {
 // require('./example')
 
 const main = require('./main')
+const events = require('./tictactoe/events')
 
 $(() => {
+  events.registerHandlers()
   main.initializeGame()
 })
