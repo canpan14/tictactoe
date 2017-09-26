@@ -27,6 +27,7 @@ const onSignUp = function (event) {
 
 const onSignUpHide = function (event) {
   $(this).find('form')[0].reset()
+  $('#signInError').text('')
 }
 
 const registerHandlers = function () {

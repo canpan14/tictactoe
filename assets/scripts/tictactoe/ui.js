@@ -14,6 +14,7 @@ const onSignUpSuccess = function (response) {
 }
 
 const onSignUpFailure = function (response) {
+  $('#signInError').text('Bad sign up attempt.')
   console.log(response)
 }
 
