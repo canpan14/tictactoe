@@ -10,8 +10,18 @@ const onBoardClick = function (event) {
   game.fillBox(event)
 }
 
+const onLogin = function (event) {
+  // Login logic
+}
+
+const onSignUp = function (event) {
+  // Sign up logic
+}
+
 const registerHandlers = function () {
   $('#gameBoard').on('mouseup', onBoardClick)
+  $('#login').on('submit', onLogin)
+  $('#signUp').on('submit', onSignUp)
 }
 
 module.exports = {
