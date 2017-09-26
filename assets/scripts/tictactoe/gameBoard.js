@@ -52,7 +52,9 @@ const checkDownLeft = function () {
 }
 
 const isArrayAllSameValues = function (arr) {
-  return arr.every(ele => ele === arr[0])
+  return arr.every(ele => {
+    return (ele === arr[0] && ele !== 0)
+  })
 }
 
 module.exports = {
