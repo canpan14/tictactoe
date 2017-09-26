@@ -1,0 +1,74 @@
+header {
+  background: #000;
+  color: #FFF;
+  display: block;
+  height: 82px;
+}
+
+.boardContainer {
+  margin: 0 auto;
+  width: 800px;
+}
+
+.game {
+  margin: 0 auto;
+}
+
+.gameBoard {
+  border-collapse: separate;
+  border-spacing: 2px;
+  margin: 0 auto;
+}
+
+.login {
+  display: block;
+  float: right;
+}
+
+.loginButton {
+  background: white;
+  border: none;
+  color: black;
+  margin: 0 2px;
+  padding: 2px 6px;
+}
+
+.logo {
+  margin-top: 17px;
+}
+
+.playerTurn {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.signup {
+  color: white;
+}
+
+.signup:hover {
+  color: grey;
+}
+
+.signup:focus {
+  color: white;
+}
+
+.title {
+  clear: both;
+  display: block;
+  margin: 0 auto;
+  text-align: center
+}
+
+/*https://codepen.io/ziga-miklic/pen/Fagmh*/
+.square {
+    background-color: #000;
+    border-radius: 10px;
+    color: #FFF;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 70px;
+    height:100px;
+    text-align: center;
+    width:100px;
+}
