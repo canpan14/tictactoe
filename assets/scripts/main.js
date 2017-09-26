@@ -1,6 +1,5 @@
 'use strict'
 
-// events
 $('#gameBoard').on('mouseup', function (event) {
   // If gameover or cell is already filled, ignore
   if (gameOver || event.target.innerHTML) {
@@ -108,6 +107,12 @@ const draw = function () {
   $('#playerTurnText').text('Draw!')
 }
 
-createPlayers()
-currentPlayer = players[0]
-$('#playerTurnText').text(players[0].name + '\'s turn')
+const initializeGame = function () {
+  createPlayers()
+  currentPlayer = players[0]
+  $('#playerTurnText').text(players[0].name + '\'s turn')
+}
+
+module.exports = {
+  initializeGame
+}
