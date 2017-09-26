@@ -9,6 +9,7 @@ const updateBoard = function (boardArray) {
 }
 
 const onSignUpSuccess = function (response) {
+  $('#signUpModal').modal('hide')
   console.log(response)
 }
 
