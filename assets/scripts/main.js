@@ -1,6 +1,7 @@
 'use strict'
 
-const ui = require('./ui.js')
+const ui = require('./tictactoe/ui')
+const gameBoard = require('./tictactoe/gameBoard')
 
 // Player contructor
 const Player = function (id, name, boardMarker) {
@@ -11,7 +12,6 @@ const Player = function (id, name, boardMarker) {
 
 // Global variables
 const players = []
-const boardArray = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 let currentPlayer
 let gameOver = false
 let turnCounter = 0
@@ -29,61 +29,7 @@ const changeTurns = function () {
   } else {
     currentPlayer = players[0]
   }
-  ui.onTurnChange()
-}
-
-// Checks for win based on last play
-const checkForWin = function (r, c) {
-  if (checkHorizontalWin(r) || checkVerticalWin(c) || checkDiagonalWin(r, c)) {
-    gameOver = true
-    win()
-  } else {
-    turnCounter++
-    if (turnCounter >= 9) {
-      gameOver = true
-      draw()
-    }
-  }
-  return gameOver
-}
-
-const checkHorizontalWin = function (r) {
-  if (boardArray[r][0] + boardArray[r][1] + boardArray[r][2] === currentPlayer.id * 3) {
-    return true
-  }
-  return false
-}
-
-const checkVerticalWin = function (c) {
-  if (boardArray[0][c] + boardArray[1][c] + boardArray[2][c] === currentPlayer.id * 3) {
-    return true
-  }
-  return false
-}
-
-const checkDiagonalWin = function (r, c) {
-  let isWin = false
-  if (r === c) {
-    isWin = checkDownRight()
-  }
-  if ((r === 0 & c === 2) || (r === 2 & c === 0)) {
-    isWin = checkDownLeft()
-  }
-  return isWin
-}
-
-const checkDownRight = function () {
-  if (boardArray[0][0] + boardArray[1][1] + boardArray[2][2] === currentPlayer.id * 3) {
-    return true
-  }
-  return false
-}
-
-const checkDownLeft = function () {
-  if (boardArray[0][2] + boardArray[1][1] + boardArray[2][0] === currentPlayer.id * 3) {
-    return true
-  }
-  return false
+  ui.onTurnChange(currentPlayer)
 }
 
 const win = function () {
@@ -96,14 +42,23 @@ const draw = function () {
 
 const isGameOver = () => gameOver
 
-const fillBox = function (event) {
+const takeTurn = function (event) {
   event.target.innerHTML = currentPlayer.boardMarker
   const cellClicked = event.target.attributes['data-pos'].value.split(',')
   const r = parseInt(cellClicked[0])
   const c = parseInt(cellClicked[1])
-  boardArray[r][c] = currentPlayer.id
-  if (!checkForWin(r, c)) {
-    changeTurns()
+  turnCounter++
+  gameBoard.makeMove(currentPlayer, r, c)
+  if (!gameBoard.checkForWin()) {
+    if (turnCounter >= 9) {
+      gameOver = true
+      draw()
+    } else {
+      changeTurns()
+    }
+  } else {
+    gameOver = true
+    win()
   }
 }
 
@@ -132,7 +87,7 @@ const convertArray2Dto1D = function (arr) {
 module.exports = {
   initializeGame,
   isGameOver,
-  fillBox,
+  takeTurn,
   convertArray1Dto2D,
   convertArray2Dto1D
 }
