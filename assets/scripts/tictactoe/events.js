@@ -37,12 +37,27 @@ const onSignOut = function (event) {
     .catch(ui.onSignOutFailure)
 }
 
+const onChangePassword = function (event) {
+  event.preventDefault()
+  const formData = getFormFields(event.target)
+  api.changePassword(formData)
+    .then(ui.onChangePasswordSuccess)
+    .catch(ui.onChangePasswordFailure)
+}
+
+const onChangePasswordHide = function (event) {
+  $(this).find('form')[0].reset()
+  $('#changePasswordError').text('')
+}
+
 const registerHandlers = function () {
   $('#gameBoard').on('mouseup', onBoardClick)
   $('#loginContainer').on('submit', onLogin)
   $('#signUp').on('submit', onSignUp)
   $('#signUpModal').on('hidden.bs.modal', onSignUpHide)
   $('#signOut').on('click', onSignOut)
+  $('#changePassword').on('submit', onChangePassword)
+  $('#changePasswordModal').on('hidden.bs.modal', onChangePasswordHide)
 }
 
 module.exports = {

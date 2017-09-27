@@ -2,8 +2,8 @@
 
 const store = require('../store')
 
-const onTurnChange = function (currentPlayer) {
-  $('#playerTurnText').text(currentPlayer.name + '\'s turn')
+const loginToPlay = function () {
+  $('#notification').text('Please login to play')
 }
 
 const updateBoard = function (boardArray) {
@@ -12,6 +12,10 @@ const updateBoard = function (boardArray) {
 
 const updateCell = function (cell, marker) {
   cell.innerHTML = marker
+}
+
+const onTurnChange = function (currentPlayer) {
+  $('#playerTurnText').text(currentPlayer.name + '\'s turn')
 }
 
 const onSignUpSuccess = function (response) {
@@ -26,6 +30,7 @@ const onSignUpFailure = function (response) {
 
 const onSignInSuccess = function (response) {
   store.user = response.user
+  $('#notification').text('')
   $('#loginContainer').hide()
   $('#loginContainer').find('form')[0].reset()
   $('#signedIn').css('display', 'flex')
@@ -49,7 +54,18 @@ const onSignOutFailure = function (response) {
   console.log(response)
 }
 
+const onChangePasswordSuccess = function (response) {
+  $('#changePasswordModal').modal('hide')
+  console.log(response)
+}
+
+const onChangePasswordFailure = function (response) {
+  $('#changePasswordError').text('Bad change password attempt.')
+  console.log(response)
+}
+
 module.exports = {
+  loginToPlay,
   onTurnChange,
   updateBoard,
   updateCell,
@@ -58,5 +74,7 @@ module.exports = {
   onSignInSuccess,
   onSignInFailure,
   onSignOutSuccess,
-  onSignOutFailure
+  onSignOutFailure,
+  onChangePasswordSuccess,
+  onChangePasswordFailure
 }

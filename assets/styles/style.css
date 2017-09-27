@@ -41,6 +41,12 @@ header {
   margin-top: 17px;
 }
 
+.notification {
+  color: red;
+  margin: 0 auto;
+  text-align: center;
+}
+
 .playerTurn {
   margin: 0 auto;
   text-align: center;

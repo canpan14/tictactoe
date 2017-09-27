@@ -3,6 +3,7 @@
 const ui = require('./ui')
 const gameBoard = require('./gameBoard')
 const Player = require('./player')
+const store = require('../store')
 
 // Global variables
 const players = []
@@ -73,6 +74,11 @@ const draw = function () {
  * @return {boolean} Return true if move is legal
  */
 const isLegalMove = function (event) {
+  // Can only play when logged in
+  if (!store.user) {
+    ui.loginToPlay()
+    return false
+  }
   // If gameover or cell is already filled, ignore
   if (gameOver || event.target.innerHTML) {
     return false
