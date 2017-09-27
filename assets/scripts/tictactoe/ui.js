@@ -14,6 +14,15 @@ const updateCell = function (cell, marker) {
   cell.innerHTML = marker
 }
 
+const clearBoard = function () {
+  const table = $('#gameBoard')[0]
+  for (let i = 0; i < table.rows.length; i++) {
+    for (let j = 0; j < table.rows[i].cells.length; j++) {
+      table.rows[i].cells[j].innerHTML = ''
+    }
+  }
+}
+
 const onTurnChange = function (currentPlayer) {
   $('#playerTurnText').text(currentPlayer.name + '\'s turn')
 }
@@ -43,6 +52,7 @@ const onSignInFailure = function (response) {
 
 const onSignOutSuccess = function (response) {
   delete store.user
+  clearBoard()
   $('#signedIn').css('display', 'none')
   $('#loginContainer').show()
   console.log(response)
@@ -69,6 +79,7 @@ module.exports = {
   onTurnChange,
   updateBoard,
   updateCell,
+  clearBoard,
   onSignUpSuccess,
   onSignUpFailure,
   onSignInSuccess,

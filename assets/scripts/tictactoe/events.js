@@ -50,6 +50,10 @@ const onChangePasswordHide = function (event) {
   $('#changePasswordError').text('')
 }
 
+const onResetGame = function (event) {
+  controller.resetGame()
+}
+
 const registerHandlers = function () {
   $('#gameBoard').on('mouseup', onBoardClick)
   $('#loginContainer').on('submit', onLogin)
@@ -58,6 +62,7 @@ const registerHandlers = function () {
   $('#signOut').on('click', onSignOut)
   $('#changePassword').on('submit', onChangePassword)
   $('#changePasswordModal').on('hidden.bs.modal', onChangePasswordHide)
+  $('#resetButton').on('click', onResetGame)
 }
 
 module.exports = {

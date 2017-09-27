@@ -32,6 +32,21 @@ const takeTurn = function (event) {
   analyzeBoardState() // Check the new board for a win/draw and handle it
 }
 
+/**
+ * Resets the current game
+ * @return {undefined}
+ */
+const resetGame = function () {
+  gameOver = true
+  ui.clearBoard()
+  players.length = 0
+  turnCounter = 0
+  currentPlayer = null
+  initializeGame()
+  changeTurns()
+  gameOver = false
+}
+
 // Interal functions
 /**
  * Creates the initial players
@@ -120,5 +135,6 @@ const analyzeBoardState = function () {
 // Exports
 module.exports = {
   initializeGame,
-  takeTurn
+  takeTurn,
+  resetGame
 }

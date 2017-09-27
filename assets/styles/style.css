@@ -52,6 +52,10 @@ header {
   text-align: center;
 }
 
+.resetButton {
+  margin: 0 auto;
+}
+
 .signedIn {
   float: right;
 }
@@ -68,14 +72,6 @@ header {
   color: white;
 }
 
-.title {
-  clear: both;
-  display: block;
-  margin: 0 auto;
-  text-align: center
-}
-
-/*https://codepen.io/ziga-miklic/pen/Fagmh*/
 .square {
     background-color: #000;
     border-radius: 10px;
@@ -85,4 +81,11 @@ header {
     height:100px;
     text-align: center;
     width:100px;
+}
+
+.title {
+  clear: both;
+  display: block;
+  margin: 0 auto;
+  text-align: center
 }
