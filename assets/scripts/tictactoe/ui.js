@@ -74,6 +74,14 @@ const onChangePasswordFailure = function (response) {
   console.log(response)
 }
 
+const onNewGameSuccess = function (response) {
+  console.log(response)
+}
+
+const onNewGameFailure = function (response) {
+  console.log(response)
+}
+
 module.exports = {
   loginToPlay,
   onTurnChange,
@@ -87,5 +95,7 @@ module.exports = {
   onSignOutSuccess,
   onSignOutFailure,
   onChangePasswordSuccess,
-  onChangePasswordFailure
+  onChangePasswordFailure,
+  onNewGameSuccess,
+  onNewGameFailure
 }

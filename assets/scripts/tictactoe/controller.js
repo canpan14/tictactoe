@@ -12,11 +12,18 @@ let gameOver = false
 let turnCounter = 0
 
 // External functions
+
+const getTurnCounter = () => turnCounter
+
 /**
  * Initializes the game state on page load
  * @return {undefined}
  */
 const initializeGame = function () {
+  players.length = 0
+  turnCounter = 0
+  currentPlayer = null
+  gameOver = false
   createPlayers()
   changeTurns()
 }
@@ -39,12 +46,7 @@ const takeTurn = function (event) {
 const resetGame = function () {
   gameOver = true
   ui.clearBoard()
-  players.length = 0
-  turnCounter = 0
-  currentPlayer = null
   initializeGame()
-  changeTurns()
-  gameOver = false
 }
 
 // Interal functions
@@ -134,6 +136,7 @@ const analyzeBoardState = function () {
 
 // Exports
 module.exports = {
+  getTurnCounter,
   initializeGame,
   takeTurn,
   resetGame

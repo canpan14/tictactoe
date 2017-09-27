@@ -6,6 +6,9 @@ const ui = require('./ui')
 const getFormFields = require('../../../lib/get-form-fields')
 
 const onBoardClick = function (event) {
+  if (controller.getTurnCounter() === 1) {
+    onNewGame()
+  }
   controller.takeTurn(event)
 }
 
@@ -52,6 +55,12 @@ const onChangePasswordHide = function (event) {
 
 const onResetGame = function (event) {
   controller.resetGame()
+}
+
+const onNewGame = function () {
+  api.newGame()
+    .then(ui.onNewGameSuccess)
+    .catch(ui.onNewGameFailure)
 }
 
 const registerHandlers = function () {
