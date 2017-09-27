@@ -8,6 +8,10 @@ const updateBoard = function (boardArray) {
   // Update board based on the board array
 }
 
+const updateCell = function (cell, marker) {
+  cell.innerHTML = marker
+}
+
 const onSignUpSuccess = function (response) {
   $('#signUpModal').modal('hide')
   console.log(response)
@@ -21,6 +25,7 @@ const onSignUpFailure = function (response) {
 module.exports = {
   onTurnChange,
   updateBoard,
+  updateCell,
   onSignUpSuccess,
   onSignUpFailure
 }

@@ -1,16 +1,12 @@
 'use strict'
 
-const game = require('../main')
+const controller = require('./controller')
 const api = require('./api')
 const ui = require('./ui')
 const getFormFields = require('../../../lib/get-form-fields')
 
 const onBoardClick = function (event) {
-  // If gameover or cell is already filled, ignore
-  if (game.isGameOver() || event.target.innerHTML) {
-    return
-  }
-  game.takeTurn(event)
+  controller.takeTurn(event)
 }
 
 const onLogin = function (event) {
