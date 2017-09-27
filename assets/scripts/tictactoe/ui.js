@@ -15,6 +15,7 @@ const updateCell = function (cell, marker) {
 }
 
 const clearBoard = function () {
+  $('#newGame').attr('disabled', true)
   const table = $('#gameBoard')[0]
   for (let i = 0; i < table.rows.length; i++) {
     for (let j = 0; j < table.rows[i].cells.length; j++) {
@@ -25,6 +26,14 @@ const clearBoard = function () {
 
 const onTurnChange = function (currentPlayer) {
   $('#playerTurnText').text(currentPlayer.name + '\'s turn')
+}
+
+const onWin = function () {
+  $('#newGame').attr('disabled', false)
+}
+
+const onDraw = function () {
+  $('#newGame').attr('disabled', false)
 }
 
 const onSignUpSuccess = function (response) {
@@ -88,6 +97,8 @@ module.exports = {
   updateBoard,
   updateCell,
   clearBoard,
+  onWin,
+  onDraw,
   onSignUpSuccess,
   onSignUpFailure,
   onSignInSuccess,

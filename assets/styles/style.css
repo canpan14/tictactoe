@@ -5,6 +5,12 @@ header {
   height: 82px;
 }
 
+main {
+  margin: 0 auto;
+  text-align: center;
+  width: 800px;
+}
+
 .boardContainer {
   margin: 0 auto;
   width: 800px;
@@ -50,10 +56,6 @@ header {
 .playerTurn {
   margin: 0 auto;
   text-align: center;
-}
-
-.resetButton {
-  margin: 0 auto;
 }
 
 .signedIn {

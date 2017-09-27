@@ -47,29 +47,33 @@
         </form>
       </div>
     </header>
-    <h1 class="title">Tic-Tac-Toe</h1>
-    <div class="game">
-      <table class="gameBoard" id='gameBoard'>
-        <tr>
-          <td class='square' data-pos='0,0'></td>
-          <td class='square' data-pos='0,1'></td>
-          <td class='square' data-pos='0,2'></td>
-        </tr>
-        <tr>
-          <td class='square' data-pos='1,0'></td>
-          <td class='square' data-pos='1,1'></td>
-          <td class='square' data-pos='1,2'></td>
-        </tr>
-        <tr >
-          <td class='square' data-pos='2,0'></td>
-          <td class='square' data-pos='2,1'></td>
-          <td class='square' data-pos='2,2'></td>
-        </tr>
-      </table>
-    </div>
-    <div class="playerTurn"><span id="playerTurnText"></span></div>
-    <div class="notification"><h4 id="notification"></h4></div>
-    <div class="reset"><button id="resetButton" class="resetButton btn btn-secondary">Reset</button></div>
+    <main>
+      <h1 class="title">Tic-Tac-Toe</h1>
+      <div class="game">
+        <table class="gameBoard" id='gameBoard'>
+          <tr>
+            <td class='square' data-pos='0,0'></td>
+            <td class='square' data-pos='0,1'></td>
+            <td class='square' data-pos='0,2'></td>
+          </tr>
+          <tr>
+            <td class='square' data-pos='1,0'></td>
+            <td class='square' data-pos='1,1'></td>
+            <td class='square' data-pos='1,2'></td>
+          </tr>
+          <tr >
+            <td class='square' data-pos='2,0'></td>
+            <td class='square' data-pos='2,1'></td>
+            <td class='square' data-pos='2,2'></td>
+          </tr>
+        </table>
+      </div>
+      <div class="row">
+        <button id="newGame" class="btn btn-primary col-xs-4 col-xs-offset-4" disabled=true>New Game</button>
+      </div>
+      <div class="playerTurn"><span id="playerTurnText"></span></div>
+      <div class="notification"><h4 id="notification"></h4></div>
+    </main>
     <div id='signUpModal' class='modal fade' role='dialog' tabindex='-1' aria-hidden='true'>
       <div class='modal-dialog' role='document'>
         <div class='modal-content'>

@@ -15,6 +15,14 @@ const checkForWin = function () {
   return false
 }
 
+const resetBoard = function () {
+  for (let i = 0; i < boardArray.length; i++) {
+    for (let j = 0; j < boardArray[i].length; j++) {
+      boardArray[i][j] = 0
+    }
+  }
+}
+
 const checkHorizontalWin = function () {
   for (let i = 0; i < boardArray.length; i++) {
     if (isArrayAllSameValues(boardArray[i])) {
@@ -59,5 +67,6 @@ const isArrayAllSameValues = function (arr) {
 
 module.exports = {
   makeMove,
-  checkForWin
+  checkForWin,
+  resetBoard
 }

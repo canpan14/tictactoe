@@ -4,8 +4,14 @@ const controller = require('./controller')
 const api = require('./api')
 const ui = require('./ui')
 const getFormFields = require('../../../lib/get-form-fields')
+const store = require('../store')
 
 const onBoardClick = function (event) {
+  // Can only play when logged in
+  if (!store.user) {
+    ui.loginToPlay()
+    return
+  }
   if (controller.getTurnCounter() === 1) {
     onNewGame()
   }
@@ -71,7 +77,7 @@ const registerHandlers = function () {
   $('#signOut').on('click', onSignOut)
   $('#changePassword').on('submit', onChangePassword)
   $('#changePasswordModal').on('hidden.bs.modal', onChangePasswordHide)
-  $('#resetButton').on('click', onResetGame)
+  $('#newGame').on('click', onResetGame)
 }
 
 module.exports = {

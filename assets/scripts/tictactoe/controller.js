@@ -3,7 +3,6 @@
 const ui = require('./ui')
 const gameBoard = require('./gameBoard')
 const Player = require('./player')
-const store = require('../store')
 
 // Global variables
 const players = []
@@ -20,6 +19,7 @@ const getTurnCounter = () => turnCounter
  * @return {undefined}
  */
 const initializeGame = function () {
+  gameBoard.resetBoard()
   players.length = 0
   turnCounter = 0
   currentPlayer = null
@@ -91,11 +91,6 @@ const draw = function () {
  * @return {boolean} Return true if move is legal
  */
 const isLegalMove = function (event) {
-  // Can only play when logged in
-  if (!store.user) {
-    ui.loginToPlay()
-    return false
-  }
   // If gameover or cell is already filled, ignore
   if (gameOver || event.target.innerHTML) {
     return false
@@ -125,12 +120,14 @@ const analyzeBoardState = function () {
     if (turnCounter >= 9) {
       gameOver = true
       draw()
+      ui.onDraw()
     } else {
       changeTurns()
     }
   } else {
     gameOver = true
     win()
+    ui.onWin()
   }
 }
 
