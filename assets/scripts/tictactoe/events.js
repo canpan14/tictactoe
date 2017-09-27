@@ -30,11 +30,19 @@ const onSignUpHide = function (event) {
   $('#signInError').text('')
 }
 
+const onSignOut = function (event) {
+  event.preventDefault()
+  api.signOut()
+    .then(ui.onSignOutSuccess)
+    .catch(ui.onSignOutFailure)
+}
+
 const registerHandlers = function () {
   $('#gameBoard').on('mouseup', onBoardClick)
-  $('#login').on('submit', onLogin)
+  $('#loginContainer').on('submit', onLogin)
   $('#signUp').on('submit', onSignUp)
   $('#signUpModal').on('hidden.bs.modal', onSignUpHide)
+  $('#signOut').on('click', onSignOut)
 }
 
 module.exports = {

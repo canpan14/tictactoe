@@ -26,12 +26,26 @@ const onSignUpFailure = function (response) {
 
 const onSignInSuccess = function (response) {
   store.user = response.user
-  $('#login').hide()
-  $('#signedInLabel').css('display', 'inline-block')
+  $('#loginContainer').hide()
+  $('#loginContainer').find('form')[0].reset()
+  $('#signedIn').css('display', 'flex')
   console.log(response)
 }
 
 const onSignInFailure = function (response) {
+  console.log(response)
+}
+
+const onSignOutSuccess = function (response) {
+  delete store.user
+  $('#signedIn').css('display', 'none')
+  $('#loginContainer').show()
+  console.log(response)
+}
+
+const onSignOutFailure = function (response) {
+  $('#signedIn').css('display', 'none')
+  $('#loginContainer').show()
   console.log(response)
 }
 
@@ -42,5 +56,7 @@ module.exports = {
   onSignUpSuccess,
   onSignUpFailure,
   onSignInSuccess,
-  onSignInFailure
+  onSignInFailure,
+  onSignOutSuccess,
+  onSignOutFailure
 }

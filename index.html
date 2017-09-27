@@ -10,14 +10,21 @@
     <!-- Do not add `script` tags-->
     <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
     <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
-</head>
+  </head>
   <body>
     <header>
       <img class='logo' src="#" alt="logo">
-      <div id="signedIn">
-        <h4 id="signedInLabel" class="signedIn" style="display:none">Currently Signed In</h4>
+      <div id="signedIn" class="signedIn" style="display:none">
+        <table>
+          <tr>
+            <td><h4>Currently Signed In</h4></td>
+          </tr>
+          <tr>
+            <td><button id="signOut" type="button" class="btn btn-primary">Sign Out</button></td>
+          </tr>
+        </table>
       </div>
-      <div class='login'>
+      <div id="loginContainer" class='loginContainer'>
         <form id="login">
           <table>
             <tr class="loginLabels">

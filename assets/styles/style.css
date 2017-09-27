@@ -20,12 +20,12 @@ header {
   margin: 0 auto;
 }
 
-.login {
+.loginContainer {
   display: block;
   float: right;
 }
 
-.login input {
+.loginContainer input {
   color: #000;
 }
 
