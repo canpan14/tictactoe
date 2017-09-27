@@ -25,6 +25,10 @@ header {
   float: right;
 }
 
+.login input {
+  color: #000;
+}
+
 .loginButton {
   background: white;
   border: none;
@@ -40,6 +44,10 @@ header {
 .playerTurn {
   margin: 0 auto;
   text-align: center;
+}
+
+.signedIn {
+  float: right;
 }
 
 .signup {

@@ -1,5 +1,7 @@
 'use strict'
 
+const store = require('../store')
+
 const onTurnChange = function (currentPlayer) {
   $('#playerTurnText').text(currentPlayer.name + '\'s turn')
 }
@@ -22,10 +24,23 @@ const onSignUpFailure = function (response) {
   console.log(response)
 }
 
+const onSignInSuccess = function (response) {
+  store.user = response.user
+  $('#login').hide()
+  $('#signedInLabel').css('display', 'inline-block')
+  console.log(response)
+}
+
+const onSignInFailure = function (response) {
+  console.log(response)
+}
+
 module.exports = {
   onTurnChange,
   updateBoard,
   updateCell,
   onSignUpSuccess,
-  onSignUpFailure
+  onSignUpFailure,
+  onSignInSuccess,
+  onSignInFailure
 }

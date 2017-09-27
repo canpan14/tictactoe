@@ -14,6 +14,9 @@
   <body>
     <header>
       <img class='logo' src="#" alt="logo">
+      <div id="signedIn">
+        <h4 id="signedInLabel" class="signedIn" style="display:none">Currently Signed In</h4>
+      </div>
       <div class='login'>
         <form id="login">
           <table>
@@ -23,8 +26,8 @@
               <td></td>
             </tr>
             <tr>
-              <td><input name="login[username]" placeholder="Username"></td>
-              <td><input name="login[password]" type="password" placeholder="Password"></td>
+              <td><input class="form-control" name="credentials[email]" type="text" placeholder="Email"></td>
+              <td><input class="form-control" name="credentials[password]" type="password" placeholder="Password"></td>
               <td><input type="submit" class='btn btn-primary' value="Login"></td>
             </tr>
             <tr>

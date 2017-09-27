@@ -10,7 +10,11 @@ const onBoardClick = function (event) {
 }
 
 const onLogin = function (event) {
-  // Login logic
+  event.preventDefault()
+  const formData = getFormFields(event.target)
+  api.signIn(formData)
+    .then(ui.onSignInSuccess)
+    .catch(ui.onSignInFailure)
 }
 
 const onSignUp = function (event) {
