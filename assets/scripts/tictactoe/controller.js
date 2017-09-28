@@ -13,6 +13,13 @@ let turnCounter = 0
 let recentMove = null
 
 // External functions
+/**
+ * Returns true if the game is over
+ * @return {boolean} True is game is over, else false
+ */
+const isGameOver = function () {
+  return gameOver
+}
 
 /**
  * Returns the current turn number
@@ -22,6 +29,10 @@ const getTurnCounter = function () {
   return turnCounter
 }
 
+/**
+ * Returns the most recent move
+ * @return {Move} Move object
+ */
 const getRecentMove = function () {
   return recentMove
 }
@@ -153,5 +164,6 @@ module.exports = {
   initializeGame,
   takeTurn,
   resetGame,
-  getRecentMove
+  getRecentMove,
+  isGameOver
 }

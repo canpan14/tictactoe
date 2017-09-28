@@ -21,6 +21,11 @@ const onBoardClick = function (event) {
   } else {
     controller.takeTurn(event)
     onUpdateGame(controller.getRecentMove())
+      .then(() => {
+        if (controller.isGameOver()) {
+          onGetGamesForUser()
+        }
+      })
   }
 }
 
@@ -29,6 +34,7 @@ const onLogin = function (event) {
   const formData = getFormFields(event.target)
   api.signIn(formData)
     .then(ui.onSignInSuccess)
+    .then(() => onGetGamesForUser())
     .catch(ui.onSignInFailure)
 }
 
@@ -67,6 +73,7 @@ const onChangePasswordHide = function (event) {
 
 const onResetGame = function (event) {
   controller.resetGame()
+  onGetGamesForUser()
 }
 
 const onNewGame = function () {
@@ -76,9 +83,15 @@ const onNewGame = function () {
 }
 
 const onUpdateGame = function (move) {
-  api.updateGame(move)
+  return api.updateGame(move)
     .then(ui.onUpdateGameSuccess)
     .catch(ui.onUpdateGameFailure)
+}
+
+const onGetGamesForUser = function () {
+  api.getGamesForUser()
+    .then(ui.onGetGamesForUserSuccess)
+    .catch(ui.onGetGamesForUserFailure)
 }
 
 const registerHandlers = function () {

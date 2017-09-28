@@ -100,6 +100,17 @@ const onUpdateGameFailure = function (response) {
   console.log(response)
 }
 
+const onGetGamesForUserSuccess = function (response) {
+  const gamesFinished = response.games.filter(game => game.over === true).length
+  $('#gamesPlayed').text('Player has played ' + response.games.length + ' games')
+  $('#gamesFinished').text('Player has finished ' + gamesFinished + ' games')
+  console.log(response)
+}
+
+const onGetGamesForUserFailure = function (response) {
+  console.log(response)
+}
+
 module.exports = {
   loginToPlay,
   onTurnChange,
@@ -119,5 +130,7 @@ module.exports = {
   onNewGameSuccess,
   onNewGameFailure,
   onUpdateGameSuccess,
-  onUpdateGameFailure
+  onUpdateGameFailure,
+  onGetGamesForUserSuccess,
+  onGetGamesForUserFailure
 }
