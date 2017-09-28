@@ -48,6 +48,7 @@ const onSignUpFailure = function (response) {
 
 const onSignInSuccess = function (response) {
   store.user = response.user
+  $('#badLoginAttempt').text('')
   $('#notification').text('')
   $('#loginContainer').hide()
   $('#loginContainer').find('form')[0].reset()
@@ -56,12 +57,16 @@ const onSignInSuccess = function (response) {
 }
 
 const onSignInFailure = function (response) {
+  $('#badLoginAttempt').text('Bad email or password')
   console.log(response)
 }
 
 const onSignOutSuccess = function (response) {
   delete store.user
   clearBoard()
+  $('#playerTurnText').text('')
+  $('#gamesPlayed').text('')
+  $('#gamesFinished').text('')
   $('#signedIn').css('display', 'none')
   $('#loginContainer').show()
   console.log(response)
@@ -73,9 +78,8 @@ const onSignOutFailure = function (response) {
   console.log(response)
 }
 
-const onChangePasswordSuccess = function (response) {
+const onChangePasswordSuccess = function () {
   $('#changePasswordModal').modal('hide')
-  console.log(response)
 }
 
 const onChangePasswordFailure = function (response) {

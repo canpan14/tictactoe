@@ -34,6 +34,7 @@ const onLogin = function (event) {
   const formData = getFormFields(event.target)
   api.signIn(formData)
     .then(ui.onSignInSuccess)
+    .then(controller.initializeGame())
     .then(() => onGetGamesForUser())
     .catch(ui.onSignInFailure)
 }

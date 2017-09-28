@@ -11,6 +11,10 @@ main {
   width: 800px;
 }
 
+.badLoginAttempt {
+  color: red;
+}
+
 .boardContainer {
   margin: 0 auto;
   width: 800px;
