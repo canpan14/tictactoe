@@ -84,10 +84,19 @@ const onChangePasswordFailure = function (response) {
 }
 
 const onNewGameSuccess = function (response) {
+  store.game = response.game
   console.log(response)
 }
 
 const onNewGameFailure = function (response) {
+  console.log(response)
+}
+
+const onUpdateGameSuccess = function (response) {
+  console.log(response)
+}
+
+const onUpdateGameFailure = function (response) {
   console.log(response)
 }
 
@@ -108,5 +117,7 @@ module.exports = {
   onChangePasswordSuccess,
   onChangePasswordFailure,
   onNewGameSuccess,
-  onNewGameFailure
+  onNewGameFailure,
+  onUpdateGameSuccess,
+  onUpdateGameFailure
 }

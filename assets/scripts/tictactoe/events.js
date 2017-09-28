@@ -14,8 +14,14 @@ const onBoardClick = function (event) {
   }
   if (controller.getTurnCounter() === 1) {
     onNewGame()
+      .then(function () {
+        controller.takeTurn(event)
+        onUpdateGame(controller.getRecentMove())
+      })
+  } else {
+    controller.takeTurn(event)
+    onUpdateGame(controller.getRecentMove())
   }
-  controller.takeTurn(event)
 }
 
 const onLogin = function (event) {
@@ -64,9 +70,15 @@ const onResetGame = function (event) {
 }
 
 const onNewGame = function () {
-  api.newGame()
+  return api.newGame()
     .then(ui.onNewGameSuccess)
     .catch(ui.onNewGameFailure)
+}
+
+const onUpdateGame = function (move) {
+  api.updateGame(move)
+    .then(ui.onUpdateGameSuccess)
+    .catch(ui.onUpdateGameFailure)
 }
 
 const registerHandlers = function () {
@@ -82,5 +94,6 @@ const registerHandlers = function () {
 
 module.exports = {
   registerHandlers,
-  onBoardClick
+  onBoardClick,
+  onUpdateGame
 }

@@ -3,16 +3,28 @@
 const ui = require('./ui')
 const gameBoard = require('./gameBoard')
 const Player = require('./player')
+const Move = require('./move')
 
 // Global variables
 const players = []
-let currentPlayer
+let currentPlayer = null
 let gameOver = false
 let turnCounter = 0
+let recentMove = null
 
 // External functions
 
-const getTurnCounter = () => turnCounter
+/**
+ * Returns the current turn number
+ * @return {number} Current Turn
+ */
+const getTurnCounter = function () {
+  return turnCounter
+}
+
+const getRecentMove = function () {
+  return recentMove
+}
 
 /**
  * Initializes the game state on page load
@@ -23,6 +35,7 @@ const initializeGame = function () {
   players.length = 0
   turnCounter = 0
   currentPlayer = null
+  recentMove = Move.createMove()
   gameOver = false
   createPlayers()
   changeTurns()
@@ -108,6 +121,8 @@ const makeMove = function (event) {
   const cellClicked = event.target.attributes['data-pos'].value.split(',')
   const r = parseInt(cellClicked[0])
   const c = parseInt(cellClicked[1])
+  recentMove.index = r * 2 + c // Set index to move location on a 1D array
+  currentPlayer === players[0] ? recentMove.value = 'x' : recentMove.value = 'o' // Set value
   gameBoard.makeMove(currentPlayer, r, c)
 }
 
@@ -129,6 +144,7 @@ const analyzeBoardState = function () {
     win()
     ui.onWin()
   }
+  recentMove.isEndGame = gameOver
 }
 
 // Exports
@@ -136,5 +152,6 @@ module.exports = {
   getTurnCounter,
   initializeGame,
   takeTurn,
-  resetGame
+  resetGame,
+  getRecentMove
 }
