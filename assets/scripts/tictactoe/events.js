@@ -36,7 +36,6 @@ const onLogin = function (event) {
   api.signIn(formData)
     .then(ui.onSignInSuccess)
     .then(ui.activateNewGameButtons)
-    .then(controller.initializeGame())
     .then(() => onGetGamesForUser())
     .catch(ui.onSignInFailure)
 }
@@ -85,6 +84,7 @@ const onResetGame = function (event) {
 const onNewGame = function () {
   return api.newGame()
     .then(ui.onNewGameSuccess)
+    .then(controller.initializeGame)
     .catch(ui.onNewGameFailure)
 }
 
@@ -108,6 +108,9 @@ const onJoinGame = function (event) {
     .then(() => {
       createWatcher(event.target.id.value)
     })
+    .then(() => {
+      controller.joinExisitingGame(event.target['player_x'].id)
+    })
     .catch(ui.onJoinGameFailure)
 }
 
@@ -126,6 +129,7 @@ const onNewOnlineGame = function (event) {
     .then(() => {
       createWatcher(store.game.id)
     })
+    .then(controller.initializeGame)
     .catch(ui.onNewOnlineGameFailure)
 }
 
@@ -149,10 +153,7 @@ const onMultiplayerUpdate = function (data) {
     }
 
     const cell = diff(data.game.cells)
-    // Do stuff with cell to change
     controller.otherPlayerUpdate(cell)
-    // $('#watch-index').val(cell.index)
-    // $('#watch-value').val(cell.value)
   } else if (data.timeout) { // not an error
     gameWatcher.close()
   }

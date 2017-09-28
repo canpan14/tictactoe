@@ -4,6 +4,7 @@ const ui = require('./ui')
 const gameBoard = require('./gameBoard')
 const Player = require('./player')
 const Move = require('./move')
+const store = require('../store')
 
 // Global variables
 const players = []
@@ -77,7 +78,15 @@ const otherPlayerUpdate = function (cell) {
   const cellRow = Math.floor(cell.index / 3)
   const cellColumn = cell.index % 3
   ui.updateCell($('*[data-pos=\'' + cellRow + ',' + cellColumn + '\']').get(0), cell.value.toUpperCase())
+  recentMove.index = cellRow * 3 + cellColumn
+  recentMove.value = cell.value
   gameBoard.makeMove(currentPlayer, cellRow, cellColumn)
+  analyzeBoardState()
+}
+
+const joinExisitingGame = function (playerId) {
+  players[0] = Player.createPlayer(playerId, 'Player ' + playerId, 'X')
+  players[1] = Player.createPlayer(store.user.id, 'Player ' + store.user.id, 'O')
 }
 
 // Interal functions
@@ -86,7 +95,7 @@ const otherPlayerUpdate = function (cell) {
  * @return {undefined}
  */
 const createPlayers = function () {
-  players.push(Player.createPlayer(-1, 'Player 1', 'X'))
+  players.push(Player.createPlayer(store.user.id, 'Player ' + store.user.id, 'X'))
   players.push(Player.createPlayer(1, 'Player 2', 'O'))
 }
 
@@ -98,6 +107,9 @@ const changeTurns = function () {
   turnCounter++
   currentPlayer = turnCounter % 2 !== 0 ? players[0] : players[1]
   ui.onTurnChange(currentPlayer)
+  console.log('It is now turn', turnCounter)
+  console.log('It is now the turn of:')
+  console.log(currentPlayer)
 }
 
 /**
@@ -173,5 +185,6 @@ module.exports = {
   resetGame,
   getRecentMove,
   isGameOver,
-  otherPlayerUpdate
+  otherPlayerUpdate,
+  joinExisitingGame
 }
