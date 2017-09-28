@@ -95,6 +95,25 @@ const onGetGamesForUser = function () {
     .catch(ui.onGetGamesForUserFailure)
 }
 
+const onJoinGame = function (event) {
+  event.preventDefault()
+  api.joinGame(event.target.id.value)
+    .then(ui.onJoinGameSuccess)
+    .catch(ui.onJoinGameFailure)
+}
+
+// const createWatcher = function () {
+//   let gameWatcher = resourceWatcher('<server>/games/:id/watch', {
+//       Authorization: 'Token token=<token>'[,
+//       timeout: <timeout>]
+//   })
+//   return gameWatcher
+// }
+
+const onMultiplayerUpdate = function (event) {
+  console.log('Multiplayer Update!')
+}
+
 const registerHandlers = function () {
   $('#gameBoard').on('mouseup', onBoardClick)
   $('#loginContainer').on('submit', onLogin)
@@ -104,6 +123,8 @@ const registerHandlers = function () {
   $('#changePassword').on('submit', onChangePassword)
   $('#changePasswordModal').on('hidden.bs.modal', onChangePasswordHide)
   $('#newGame').on('click', onResetGame)
+  $('#gameWatch').on('change', onMultiplayerUpdate)
+  $('#multiplayerJoin').on('submit', onJoinGame)
 }
 
 module.exports = {

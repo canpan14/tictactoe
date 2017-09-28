@@ -115,6 +115,14 @@ const onGetGamesForUserFailure = function (response) {
   console.log(response)
 }
 
+const onJoinGameSuccess = function (response) {
+  console.log(response)
+}
+
+const onJoinGameFailure = function (response) {
+  console.log(response)
+}
+
 module.exports = {
   loginToPlay,
   onTurnChange,
@@ -136,5 +144,7 @@ module.exports = {
   onUpdateGameSuccess,
   onUpdateGameFailure,
   onGetGamesForUserSuccess,
-  onGetGamesForUserFailure
+  onGetGamesForUserFailure,
+  onJoinGameSuccess,
+  onJoinGameFailure
 }
