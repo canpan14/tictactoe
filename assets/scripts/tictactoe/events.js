@@ -18,7 +18,7 @@ const onBoardClick = function (event) {
     return
   }
   // Can only play after starting a new game
-  if (!store.game.id) {
+  if (!store.game) {
     return
   }
   controller.takeTurn(event)
