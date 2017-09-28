@@ -104,6 +104,7 @@ const onJoinGame = function (event) {
   event.preventDefault()
   api.joinGame(event.target.id.value)
     .then(ui.onJoinGameSuccess)
+    .then(controller.resetGame)
     .then(() => {
       createWatcher(event.target.id.value)
     })
@@ -120,7 +121,6 @@ const createWatcher = function (gameId) {
 }
 
 const onNewOnlineGame = function (event) {
-  console.log('Starting New Online Game')
   onNewGame()
     .then(ui.onNewOnlineGameSuccess)
     .then(() => {
@@ -129,9 +129,33 @@ const onNewOnlineGame = function (event) {
     .catch(ui.onNewOnlineGameFailure)
 }
 
-const onMultiplayerUpdate = function (event) {
+const onMultiplayerUpdate = function (data) {
   console.log('Multiplayer Update!')
-  console.log(event)
+  console.log(data)
+  if (data.game && data.game.cells) {
+    const diff = changes => {
+      const before = changes[0]
+      const after = changes[1]
+      for (let i = 0; i < after.length; i++) {
+        if (before[i] !== after[i]) {
+          return {
+            index: i,
+            value: after[i]
+          }
+        }
+      }
+
+      return { index: -1, value: '' }
+    }
+
+    const cell = diff(data.game.cells)
+    // Do stuff with cell to change
+    controller.otherPlayerUpdate(cell)
+    // $('#watch-index').val(cell.index)
+    // $('#watch-value').val(cell.value)
+  } else if (data.timeout) { // not an error
+    gameWatcher.close()
+  }
 }
 
 const registerHandlers = function () {

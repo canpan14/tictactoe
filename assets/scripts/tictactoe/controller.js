@@ -73,6 +73,13 @@ const resetGame = function () {
   initializeGame()
 }
 
+const otherPlayerUpdate = function (cell) {
+  const cellRow = Math.floor(cell.index / 3)
+  const cellColumn = cell.index % 3
+  ui.updateCell($('*[data-pos=\'' + cellRow + ',' + cellColumn + '\']').get(0), cell.value.toUpperCase())
+  gameBoard.makeMove(currentPlayer, cellRow, cellColumn)
+}
+
 // Interal functions
 /**
  * Creates the initial players
@@ -132,7 +139,7 @@ const makeMove = function (event) {
   const cellClicked = event.target.attributes['data-pos'].value.split(',')
   const r = parseInt(cellClicked[0])
   const c = parseInt(cellClicked[1])
-  recentMove.index = r * 2 + c // Set index to move location on a 1D array
+  recentMove.index = r * 3 + c // Set index to move location on a 1D array
   currentPlayer === players[0] ? recentMove.value = 'x' : recentMove.value = 'o' // Set value
   gameBoard.makeMove(currentPlayer, r, c)
 }
@@ -165,5 +172,6 @@ module.exports = {
   takeTurn,
   resetGame,
   getRecentMove,
-  isGameOver
+  isGameOver,
+  otherPlayerUpdate
 }
