@@ -14,8 +14,12 @@ const updateCell = function (cell, marker) {
   cell.innerHTML = marker
 }
 
+const activateNewGameButtons = function () {
+  $('#newGame').attr('disabled', false)
+  $('#newOnlineGame').attr('disabled', false)
+}
+
 const clearBoard = function () {
-  $('#newGame').attr('disabled', true)
   const table = $('#gameBoard')[0]
   for (let i = 0; i < table.rows.length; i++) {
     for (let j = 0; j < table.rows[i].cells.length; j++) {
@@ -61,15 +65,17 @@ const onSignInFailure = function (response) {
   console.log(response)
 }
 
-const onSignOutSuccess = function (response) {
+const onSignOutSuccess = function () {
   delete store.user
   clearBoard()
+  $('#newGame').attr('disabled', true)
+  $('#newOnlineGame').attr('disabled', true)
   $('#playerTurnText').text('')
   $('#gamesPlayed').text('')
   $('#gamesFinished').text('')
+  $('#currentGameId').text('')
   $('#signedIn').css('display', 'none')
   $('#loginContainer').show()
-  console.log(response)
 }
 
 const onSignOutFailure = function (response) {
@@ -89,6 +95,7 @@ const onChangePasswordFailure = function (response) {
 
 const onNewGameSuccess = function (response) {
   store.game = response.game
+  $('#currentGameId').text('')
   console.log(response)
 }
 
@@ -116,10 +123,19 @@ const onGetGamesForUserFailure = function (response) {
 }
 
 const onJoinGameSuccess = function (response) {
+  store.game = response.game
   console.log(response)
 }
 
 const onJoinGameFailure = function (response) {
+  console.log(response)
+}
+
+const onNewOnlineGameSuccess = function () {
+  $('#currentGameId').text('Current Game Id: ' + store.game.id)
+}
+
+const onNewOnlineGameFailure = function (response) {
   console.log(response)
 }
 
@@ -146,5 +162,8 @@ module.exports = {
   onGetGamesForUserSuccess,
   onGetGamesForUserFailure,
   onJoinGameSuccess,
-  onJoinGameFailure
+  onJoinGameFailure,
+  activateNewGameButtons,
+  onNewOnlineGameSuccess,
+  onNewOnlineGameFailure
 }

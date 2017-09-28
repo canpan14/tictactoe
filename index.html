@@ -49,6 +49,7 @@
     </header>
     <main>
       <h1 class="title">Tic-Tac-Toe</h1>
+      <h3 id="currentGameId"></h3>
       <div class="game">
         <table class="gameBoard" id='gameBoard'>
           <tr>
@@ -69,7 +70,10 @@
         </table>
       </div>
       <div class="row">
-        <button id="newGame" class="btn btn-primary col-xs-4 col-xs-offset-4" disabled=true>New Game</button>
+        <button id="newGame" class="btn btn-primary col-xs-4 col-xs-offset-4" disabled>New Local Game</button>
+      </div>
+      <div class="row">
+        <button id="newOnlineGame" class="btn btn-secondary col-xs-4 col-xs-offset-4" disabled>New Online Game</button>
       </div>
       <div class="row">
         <form id="multiplayerJoin">

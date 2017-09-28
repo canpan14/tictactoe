@@ -5,6 +5,11 @@ const api = require('./api')
 const ui = require('./ui')
 const getFormFields = require('../../../lib/get-form-fields')
 const store = require('../store')
+const config = require('../config')
+const rW = require('./resource-watcher-0.1.0')
+
+// Global
+let gameWatcher
 
 const onBoardClick = function (event) {
   // Can only play when logged in
@@ -12,21 +17,17 @@ const onBoardClick = function (event) {
     ui.loginToPlay()
     return
   }
-  if (controller.getTurnCounter() === 1) {
-    onNewGame()
-      .then(function () {
-        controller.takeTurn(event)
-        onUpdateGame(controller.getRecentMove())
-      })
-  } else {
-    controller.takeTurn(event)
-    onUpdateGame(controller.getRecentMove())
-      .then(() => {
-        if (controller.isGameOver()) {
-          onGetGamesForUser()
-        }
-      })
+  // Can only play after starting a new game
+  if (!store.game.id) {
+    return
   }
+  controller.takeTurn(event)
+  onUpdateGame(controller.getRecentMove())
+    .then(() => {
+      if (controller.isGameOver()) {
+        onGetGamesForUser()
+      }
+    })
 }
 
 const onLogin = function (event) {
@@ -34,6 +35,7 @@ const onLogin = function (event) {
   const formData = getFormFields(event.target)
   api.signIn(formData)
     .then(ui.onSignInSuccess)
+    .then(ui.activateNewGameButtons)
     .then(controller.initializeGame())
     .then(() => onGetGamesForUser())
     .catch(ui.onSignInFailure)
@@ -74,7 +76,10 @@ const onChangePasswordHide = function (event) {
 
 const onResetGame = function (event) {
   controller.resetGame()
-  onGetGamesForUser()
+  onNewGame()
+    .then(() => {
+      onGetGamesForUser()
+    })
 }
 
 const onNewGame = function () {
@@ -99,19 +104,34 @@ const onJoinGame = function (event) {
   event.preventDefault()
   api.joinGame(event.target.id.value)
     .then(ui.onJoinGameSuccess)
+    .then(() => {
+      createWatcher(event.target.id.value)
+    })
     .catch(ui.onJoinGameFailure)
 }
 
-// const createWatcher = function () {
-//   let gameWatcher = resourceWatcher('<server>/games/:id/watch', {
-//       Authorization: 'Token token=<token>'[,
-//       timeout: <timeout>]
-//   })
-//   return gameWatcher
-// }
+const createWatcher = function (gameId) {
+  gameWatcher = rW.resourceWatcher(config.apiOrigin + '/games/' + gameId + '/watch',
+    {
+      Authorization: 'Token token=' + store.user.token,
+      timeout: 120
+    })
+  gameWatcher.on('change', onMultiplayerUpdate)
+}
+
+const onNewOnlineGame = function (event) {
+  console.log('Starting New Online Game')
+  onNewGame()
+    .then(ui.onNewOnlineGameSuccess)
+    .then(() => {
+      createWatcher(store.game.id)
+    })
+    .catch(ui.onNewOnlineGameFailure)
+}
 
 const onMultiplayerUpdate = function (event) {
   console.log('Multiplayer Update!')
+  console.log(event)
 }
 
 const registerHandlers = function () {
@@ -123,7 +143,7 @@ const registerHandlers = function () {
   $('#changePassword').on('submit', onChangePassword)
   $('#changePasswordModal').on('hidden.bs.modal', onChangePasswordHide)
   $('#newGame').on('click', onResetGame)
-  $('#gameWatch').on('change', onMultiplayerUpdate)
+  $('#newOnlineGame').on('click', onNewOnlineGame)
   $('#multiplayerJoin').on('submit', onJoinGame)
 }
 
