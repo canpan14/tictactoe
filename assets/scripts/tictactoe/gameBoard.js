@@ -1,5 +1,7 @@
 'use strict'
 
+const arrayHelpers = require('./arrayHelpers')
+
 const boardArray = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 
 const makeMove = function (player, row, col) {
@@ -21,6 +23,14 @@ const resetBoard = function () {
       boardArray[i][j] = 0
     }
   }
+}
+
+const get1DBoard = function () {
+  return arrayHelpers.convertArray2Dto1D(boardArray)
+}
+
+const get2DBoard = function () {
+  return boardArray
 }
 
 const checkHorizontalWin = function () {
@@ -68,5 +78,7 @@ const isArrayAllSameValues = function (arr) {
 module.exports = {
   makeMove,
   checkForWin,
-  resetBoard
+  resetBoard,
+  get1DBoard,
+  get2DBoard
 }

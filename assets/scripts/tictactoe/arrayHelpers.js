@@ -18,9 +18,7 @@ const convertArray1Dto2D = function (arr) {
  * @return {array}     1D array with length 9
  */
 const convertArray2Dto1D = function (arr) {
-  const newArr = arr.reduce((a, b) => {
-    a.concat(b)
-  })
+  const newArr = [].concat(...arr)
   return newArr
 }
 

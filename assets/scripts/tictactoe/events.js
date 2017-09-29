@@ -7,6 +7,7 @@ const getFormFields = require('../../../lib/get-form-fields')
 const store = require('../store')
 const config = require('../config')
 const rW = require('./resource-watcher-0.1.0')
+const gameBoard = require('./gameBoard')
 
 // Global
 let gameWatcher
@@ -134,26 +135,37 @@ const onNewOnlineGame = function (event) {
 }
 
 const onMultiplayerUpdate = function (data) {
-  console.log('Multiplayer Update!')
-  console.log(data)
   if (data.game && data.game.cells) {
+    console.log('Multiplayer Update!')
+    console.log(data)
     const diff = changes => {
       const before = changes[0]
       const after = changes[1]
-      for (let i = 0; i < after.length; i++) {
-        if (before[i] !== after[i]) {
-          return {
-            index: i,
-            value: after[i]
+      // Check if after and current board are the same and ignore if they are,
+      const currentBoard = gameBoard.get1DBoard()
+      for (let i = 0; i < currentBoard.length; i++) {
+        let currentBoardAtI = ''
+        if (currentBoard[i] !== 0) {
+          currentBoardAtI = currentBoard[i].boardMarker.toLowerCase()
+        }
+        if (currentBoardAtI !== after[i]) {
+          for (let i = 0; i < after.length; i++) {
+            if (before[i] !== after[i]) {
+              return {
+                index: i,
+                value: after[i]
+              }
+            }
           }
         }
       }
-
-      return { index: -1, value: '' }
+      return false
     }
 
     const cell = diff(data.game.cells)
-    controller.otherPlayerUpdate(cell)
+    if (cell !== false) {
+      controller.otherPlayerUpdate(cell)
+    }
   } else if (data.timeout) { // not an error
     gameWatcher.close()
   }
