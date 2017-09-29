@@ -139,13 +139,13 @@ const createWatcher = function (gameId) {
 const onNewOnlineGame = function (event) {
   onNewGame()
     .then(ui.onNewOnlineGameSuccess)
+    .then(controller.resetGame)
     .then(() => {
       createWatcher(store.game.id)
     })
     .then(() => {
       controller.setOnlineGame(true)
     })
-    .then(controller.initializeGame)
     .catch(ui.onNewOnlineGameFailure)
 }
 

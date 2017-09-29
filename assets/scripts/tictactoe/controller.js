@@ -89,6 +89,7 @@ const otherPlayerJoin = function (id) {
   isOnlineCanMove = true
   isOtherPlayerJoin = true
   players[1] = Player.createPlayer(id, 'Player ' + id, 'O')
+  currentPlayer = players[0]
 }
 
 const otherPlayerUpdate = function (cell) {
@@ -107,6 +108,7 @@ const joinExisitingGame = function (playerId) {
   isOtherPlayerJoin = true
   players[0] = Player.createPlayer(playerId, 'Player ' + playerId, 'X')
   players[1] = Player.createPlayer(store.user.id, 'Player ' + store.user.id, 'O')
+  currentPlayer = players[0]
   ui.onTurnChange(players[0])
 }
 
