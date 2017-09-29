@@ -14,6 +14,7 @@ let turnCounter = 0
 let recentMove = null
 let isOnlineCanMove = false
 let isOnlineGame = false
+let isOtherPlayerJoin = false
 
 // External functions
 /**
@@ -73,13 +74,20 @@ const takeTurn = function (event) {
  */
 const resetGame = function () {
   gameOver = true
+  isOnlineCanMove = false
+  isOnlineGame = false
   ui.clearBoard()
   initializeGame()
+}
+
+const setOnlineGame = function (isOnline) {
+  isOnlineGame = isOnline
 }
 
 const otherPlayerJoin = function (id) {
   isOnlineGame = true
   isOnlineCanMove = true
+  isOtherPlayerJoin = true
   players[1] = Player.createPlayer(id, 'Player ' + id, 'O')
 }
 
@@ -96,6 +104,7 @@ const otherPlayerUpdate = function (cell) {
 
 const joinExisitingGame = function (playerId) {
   isOnlineGame = true
+  isOtherPlayerJoin = true
   players[0] = Player.createPlayer(playerId, 'Player ' + playerId, 'X')
   players[1] = Player.createPlayer(store.user.id, 'Player ' + store.user.id, 'O')
   ui.onTurnChange(players[0])
@@ -148,7 +157,7 @@ const isLegalMove = function (event) {
     return false
   }
   if (isOnlineGame) {
-    return isOnlineCanMove
+    return isOnlineCanMove && isOtherPlayerJoin
   }
   return true
 }
@@ -200,5 +209,6 @@ module.exports = {
   otherPlayerUpdate,
   joinExisitingGame,
   otherPlayerJoin,
-  isLegalMove
+  isLegalMove,
+  setOnlineGame
 }

@@ -142,16 +142,15 @@ const onNewOnlineGame = function (event) {
     .then(() => {
       createWatcher(store.game.id)
     })
+    .then(() => {
+      controller.setOnlineGame(true)
+    })
     .then(controller.initializeGame)
     .catch(ui.onNewOnlineGameFailure)
 }
 
 const onMultiplayerUpdate = function (data) {
-  console.log('Multiplayer Update!')
-  console.log(data)
   if (data.game && data.game.cells) {
-    // console.log('Multiplayer Update!')
-    // console.log(data)
     const diff = changes => {
       const before = changes[0]
       const after = changes[1]
