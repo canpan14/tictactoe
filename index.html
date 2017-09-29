@@ -75,19 +75,16 @@
       <div class="row">
         <button id="newOnlineGame" class="btn btn-secondary col-xs-4 col-xs-offset-4" disabled>New Online Game</button>
       </div>
-      <div class="row">
-        <form id="multiplayerJoin">
-          <div class="form-group">
-            <label class="control-label col-xs-2 col-xs-offset-3" for="gameId">Game #:</label>
-            <div class="col-xs-3">
-              <input type="text" name="id" placeholder="Enter Game #" required>
+      <form class='form-inline' id="multiplayerJoin">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-3 col-xs-offset-4">
+              <input class="form-control" type="text" name="id" placeholder="Enter Game #" required>
             </div>
-            <div class="col-xs-1">
-              <button type="submit">Join</button>
-            </div>
+            <button class="col-xs-1 btn btn-primary" type="submit" id="joinGameButton" disabled>Join</button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
       <div class="playerTurn"><span id="playerTurnText"></span></div>
       <div><h4 id="gamesPlayed"></h4></div>
       <div><h4 id="gamesFinished"></h4></div>

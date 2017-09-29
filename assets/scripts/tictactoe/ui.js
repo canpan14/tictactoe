@@ -57,6 +57,7 @@ const onSignInSuccess = function (response) {
   $('#loginContainer').hide()
   $('#loginContainer').find('form')[0].reset()
   $('#signedIn').css('display', 'flex')
+  $('#joinGameButton').attr('disabled', false)
   console.log(response)
 }
 
@@ -70,6 +71,7 @@ const onSignOutSuccess = function () {
   clearBoard()
   $('#newGame').attr('disabled', true)
   $('#newOnlineGame').attr('disabled', true)
+  $('#joinGameButton').attr('disabled', true)
   $('#playerTurnText').text('')
   $('#gamesPlayed').text('')
   $('#gamesFinished').text('')
