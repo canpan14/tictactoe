@@ -12,6 +12,8 @@ let currentPlayer = null
 let gameOver = false
 let turnCounter = 0
 let recentMove = null
+let isOnlineCanMove = false
+let isOnlineGame = false
 
 // External functions
 /**
@@ -60,6 +62,7 @@ const initializeGame = function () {
  */
 const takeTurn = function (event) {
   if (!isLegalMove(event)) return // Do nothing if illegal move
+  isOnlineCanMove = false
   makeMove(event) // Make the move on the board
   analyzeBoardState() // Check the new board for a win/draw and handle it
 }
@@ -74,6 +77,12 @@ const resetGame = function () {
   initializeGame()
 }
 
+const otherPlayerJoin = function (id) {
+  isOnlineGame = true
+  isOnlineCanMove = true
+  players[1] = Player.createPlayer(id, 'Player ' + id, 'O')
+}
+
 const otherPlayerUpdate = function (cell) {
   const cellRow = Math.floor(cell.index / 3)
   const cellColumn = cell.index % 3
@@ -82,11 +91,14 @@ const otherPlayerUpdate = function (cell) {
   recentMove.value = cell.value
   gameBoard.makeMove(currentPlayer, cellRow, cellColumn)
   analyzeBoardState()
+  isOnlineCanMove = true
 }
 
 const joinExisitingGame = function (playerId) {
+  isOnlineGame = true
   players[0] = Player.createPlayer(playerId, 'Player ' + playerId, 'X')
   players[1] = Player.createPlayer(store.user.id, 'Player ' + store.user.id, 'O')
+  ui.onTurnChange(players[0])
 }
 
 // Interal functions
@@ -107,9 +119,6 @@ const changeTurns = function () {
   turnCounter++
   currentPlayer = turnCounter % 2 !== 0 ? players[0] : players[1]
   ui.onTurnChange(currentPlayer)
-  console.log('It is now turn', turnCounter)
-  console.log('It is now the turn of:')
-  console.log(currentPlayer)
 }
 
 /**
@@ -137,6 +146,9 @@ const isLegalMove = function (event) {
   // If gameover or cell is already filled, ignore
   if (gameOver || event.target.innerHTML) {
     return false
+  }
+  if (isOnlineGame) {
+    return isOnlineCanMove
   }
   return true
 }
@@ -186,5 +198,7 @@ module.exports = {
   getRecentMove,
   isGameOver,
   otherPlayerUpdate,
-  joinExisitingGame
+  joinExisitingGame,
+  otherPlayerJoin,
+  isLegalMove
 }

@@ -22,6 +22,18 @@ const onBoardClick = function (event) {
   if (!store.game) {
     return
   }
+  // Ignore click not on a cell
+  if (event.target.id === 'gameBoard') {
+    return
+  }
+  // Ignore click on cell with data in it
+  if (event.target.innerHTML) {
+    return
+  }
+  // Check if it's a legal move
+  if (!controller.isLegalMove(event)) {
+    return
+  }
   controller.takeTurn(event)
   onUpdateGame(controller.getRecentMove())
     .then(() => {
@@ -110,7 +122,7 @@ const onJoinGame = function (event) {
       createWatcher(event.target.id.value)
     })
     .then(() => {
-      controller.joinExisitingGame(event.target['player_x'].id)
+      controller.joinExisitingGame(store.game.player_x.id)
     })
     .catch(ui.onJoinGameFailure)
 }
@@ -135,9 +147,11 @@ const onNewOnlineGame = function (event) {
 }
 
 const onMultiplayerUpdate = function (data) {
+  console.log('Multiplayer Update!')
+  console.log(data)
   if (data.game && data.game.cells) {
-    console.log('Multiplayer Update!')
-    console.log(data)
+    // console.log('Multiplayer Update!')
+    // console.log(data)
     const diff = changes => {
       const before = changes[0]
       const after = changes[1]
@@ -165,6 +179,10 @@ const onMultiplayerUpdate = function (data) {
     const cell = diff(data.game.cells)
     if (cell !== false) {
       controller.otherPlayerUpdate(cell)
+    }
+  } else if (data.game) {
+    if (data.game.player_o_id) {
+      controller.otherPlayerJoin(data.game.player_o_id[1])
     }
   } else if (data.timeout) { // not an error
     gameWatcher.close()
