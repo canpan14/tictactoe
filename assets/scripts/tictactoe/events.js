@@ -40,6 +40,7 @@ const onBoardClick = function (event) {
     .then(() => {
       if (controller.isGameOver()) {
         onGetGamesForUser()
+        closeGameWatcher()
       }
     })
 }
@@ -71,6 +72,7 @@ const onSignOut = function (event) {
   event.preventDefault()
   api.signOut()
     .then(ui.onSignOutSuccess)
+    .then(closeGameWatcher)
     .catch(ui.onSignOutFailure)
 }
 
@@ -98,6 +100,7 @@ const onResetGame = function (event) {
 const onNewGame = function () {
   return api.newGame()
     .then(ui.onNewGameSuccess)
+    .then(closeGameWatcher)
     .then(controller.initializeGame)
     .catch(ui.onNewGameFailure)
 }
@@ -118,6 +121,7 @@ const onJoinGame = function (event) {
   event.preventDefault()
   api.joinGame(event.target.id.value)
     .then(ui.onJoinGameSuccess)
+    .then(closeGameWatcher)
     .then(controller.resetGame)
     .then(() => {
       createWatcher(event.target.id.value)
@@ -148,12 +152,14 @@ const onShowGame = function (event) {
       return response
     })
     .then(ui.onShowGameSuccess)
+    .then(closeGameWatcher)
     .catch(ui.onShowGameFailure)
 }
 
 const onNewOnlineGame = function (event) {
   onNewGame()
     .then(ui.onNewOnlineGameSuccess)
+    .then(closeGameWatcher)
     .then(controller.resetGame)
     .then(() => {
       createWatcher(store.game.id)
@@ -203,6 +209,12 @@ const onMultiplayerUpdate = function (data) {
     gameWatcher.close()
     controller.setGameOver(true)
     ui.notificationMessage('Game timed out')
+  }
+}
+
+const closeGameWatcher = function () {
+  if (gameWatcher) {
+    gameWatcher.close()
   }
 }
 

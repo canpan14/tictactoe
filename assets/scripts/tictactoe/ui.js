@@ -109,7 +109,6 @@ const onNewGameSuccess = function (response) {
   notificationMessage('')
   $('#viewGameMessage').text('')
   store.game = response.game
-  $('#currentGameId').text('')
   $('#currentGameId').text('Current Game Id: ' + store.game.id)
 }
 
@@ -138,6 +137,8 @@ const onGetGamesForUserFailure = function (response) {
 
 const onJoinGameSuccess = function (response) {
   store.game = response.game
+  $('#viewGameMessage').text('')
+  $('#currentGameId').text('Current Game Id: ' + store.game.id)
 }
 
 const onJoinGameFailure = function (response) {
