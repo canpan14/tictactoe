@@ -20,7 +20,7 @@ const onBoardClick = function (event) {
   }
   // Can only play after starting a new game
   if (!store.game) {
-    ui.notificationMessage('Start a new game to play')
+    ui.notificationMessage('Start or join a new game to play')
     return
   }
   // Ignore click not on a cell
@@ -140,6 +140,17 @@ const createWatcher = function (gameId) {
   gameWatcher.on('change', onMultiplayerUpdate)
 }
 
+const onShowGame = function (event) {
+  event.preventDefault()
+  api.showGame(event.target.id.value)
+    .then((response) => {
+      controller.setGameOver(true)
+      return response
+    })
+    .then(ui.onShowGameSuccess)
+    .catch(ui.onShowGameFailure)
+}
+
 const onNewOnlineGame = function (event) {
   onNewGame()
     .then(ui.onNewOnlineGameSuccess)
@@ -206,6 +217,7 @@ const registerHandlers = function () {
   $('#newGame').on('click', onResetGame)
   $('#newOnlineGame').on('click', onNewOnlineGame)
   $('#multiplayerJoin').on('submit', onJoinGame)
+  $('#viewPreviousGame').on('submit', onShowGame)
 }
 
 module.exports = {

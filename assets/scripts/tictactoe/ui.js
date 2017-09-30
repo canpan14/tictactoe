@@ -66,6 +66,7 @@ const onSignInSuccess = function (response) {
   $('#loginContainer').find('form')[0].reset()
   $('#signedIn').css('display', 'flex')
   $('#joinGameButton').attr('disabled', false)
+  $('#viewGameButton').attr('disabled', false)
 }
 
 const onSignInFailure = function (response) {
@@ -78,12 +79,14 @@ const onSignOutSuccess = function () {
   $('#newGame').attr('disabled', true)
   $('#newOnlineGame').attr('disabled', true)
   $('#joinGameButton').attr('disabled', true)
+  $('#viewGameButton').attr('disabled', true)
   $('#playerTurnText').text('')
   $('#gamesPlayed').text('')
   $('#gamesFinished').text('')
   $('#notification').text('')
   $('#currentGameId').text('')
   $('#successMessage').text('')
+  $('#viewGameMessage').text('')
   $('#signedIn').css('display', 'none')
   $('#loginContainer').show()
 }
@@ -104,8 +107,10 @@ const onChangePasswordFailure = function (response) {
 
 const onNewGameSuccess = function (response) {
   notificationMessage('')
+  $('#viewGameMessage').text('')
   store.game = response.game
   $('#currentGameId').text('')
+  $('#currentGameId').text('Current Game Id: ' + store.game.id)
 }
 
 const onNewGameFailure = function (response) {
@@ -141,11 +146,29 @@ const onJoinGameFailure = function (response) {
 
 const onNewOnlineGameSuccess = function () {
   notificationMessage('')
+  $('#viewGameMessage').text('')
   $('#currentGameId').text('Current Game Id: ' + store.game.id)
 }
 
 const onNewOnlineGameFailure = function (response) {
   notificationMessage('Failed to start a new online game')
+}
+
+const onShowGameSuccess = function (response) {
+  delete store.game
+  $('#playerTurnText').text('')
+  $('#currentGameId').text('')
+  $('#successMessage').text('')
+  notificationMessage('')
+  $('#viewGameMessage').text('Viewing game ' + response.game.id)
+  const gameBoardCells = $('#gameBoard td')
+  for (let i = 0; i < gameBoardCells.length; i++) {
+    gameBoardCells[i].innerHTML = response.game.cells[i].toUpperCase()
+  }
+}
+
+const onShowGameFailure = function (response) {
+  console.log(response)
 }
 
 module.exports = {
@@ -175,5 +198,7 @@ module.exports = {
   onJoinGameFailure,
   activateNewGameButtons,
   onNewOnlineGameSuccess,
-  onNewOnlineGameFailure
+  onNewOnlineGameFailure,
+  onShowGameSuccess,
+  onShowGameFailure
 }
