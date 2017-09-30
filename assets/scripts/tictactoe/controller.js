@@ -84,6 +84,10 @@ const setOnlineGame = function (isOnline) {
   isOnlineGame = isOnline
 }
 
+const setGameOver = function (over) {
+  gameOver = over
+}
+
 const otherPlayerJoin = function (id) {
   isOnlineGame = true
   isOnlineCanMove = true
@@ -208,6 +212,7 @@ module.exports = {
   resetGame,
   getRecentMove,
   isGameOver,
+  setGameOver,
   otherPlayerUpdate,
   joinExisitingGame,
   otherPlayerJoin,

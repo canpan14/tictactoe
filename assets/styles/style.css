@@ -47,10 +47,6 @@ main {
   padding: 2px 6px;
 }
 
-.logo {
-  margin-top: 17px;
-}
-
 .notification {
   color: red;
   margin: 0 auto;
@@ -87,6 +83,10 @@ main {
     height:100px;
     text-align: center;
     width:100px;
+}
+
+.successMessage {
+  color: #1cca1f;
 }
 
 .title {

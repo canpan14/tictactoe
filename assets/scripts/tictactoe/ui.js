@@ -3,11 +3,7 @@
 const store = require('../store')
 
 const loginToPlay = function () {
-  $('#notification').text('Please login to play')
-}
-
-const updateBoard = function (boardArray) {
-  // Update board based on the board array
+  notificationMessage('Please login to play')
 }
 
 const updateCell = function (cell, marker) {
@@ -20,12 +16,25 @@ const activateNewGameButtons = function () {
 }
 
 const clearBoard = function () {
+  $('#notification').text('')
+  $('#successMessage').text('')
   const table = $('#gameBoard')[0]
   for (let i = 0; i < table.rows.length; i++) {
     for (let j = 0; j < table.rows[i].cells.length; j++) {
       table.rows[i].cells[j].innerHTML = ''
     }
   }
+}
+
+const notificationMessage = function (text) {
+  $('#notification').text(text)
+}
+
+const successMessage = function (text, time) {
+  $('#successMessage').text(text)
+  setTimeout(() => {
+    $('#successMessage').text('')
+  }, time)
 }
 
 const onTurnChange = function (currentPlayer) {
@@ -42,12 +51,11 @@ const onDraw = function () {
 
 const onSignUpSuccess = function (response) {
   $('#signUpModal').modal('hide')
-  console.log(response)
+  successMessage('Sign Up Successful', 5000)
 }
 
 const onSignUpFailure = function (response) {
   $('#signInError').text('Bad sign up attempt.')
-  console.log(response)
 }
 
 const onSignInSuccess = function (response) {
@@ -58,12 +66,10 @@ const onSignInSuccess = function (response) {
   $('#loginContainer').find('form')[0].reset()
   $('#signedIn').css('display', 'flex')
   $('#joinGameButton').attr('disabled', false)
-  console.log(response)
 }
 
 const onSignInFailure = function (response) {
   $('#badLoginAttempt').text('Bad email or password')
-  console.log(response)
 }
 
 const onSignOutSuccess = function () {
@@ -75,7 +81,9 @@ const onSignOutSuccess = function () {
   $('#playerTurnText').text('')
   $('#gamesPlayed').text('')
   $('#gamesFinished').text('')
+  $('#notification').text('')
   $('#currentGameId').text('')
+  $('#successMessage').text('')
   $('#signedIn').css('display', 'none')
   $('#loginContainer').show()
 }
@@ -83,70 +91,70 @@ const onSignOutSuccess = function () {
 const onSignOutFailure = function (response) {
   $('#signedIn').css('display', 'none')
   $('#loginContainer').show()
-  console.log(response)
 }
 
 const onChangePasswordSuccess = function () {
   $('#changePasswordModal').modal('hide')
+  successMessage('Change Password Successful', 5000)
 }
 
 const onChangePasswordFailure = function (response) {
   $('#changePasswordError').text('Bad change password attempt.')
-  console.log(response)
 }
 
 const onNewGameSuccess = function (response) {
+  notificationMessage('')
   store.game = response.game
   $('#currentGameId').text('')
-  console.log(response)
 }
 
 const onNewGameFailure = function (response) {
-  console.log(response)
+  notificationMessage('Failed to start a new game')
 }
 
 const onUpdateGameSuccess = function (response) {
-  console.log(response)
 }
 
 const onUpdateGameFailure = function (response) {
-  console.log(response)
+  notificationMessage('Failed to update game on server')
 }
 
 const onGetGamesForUserSuccess = function (response) {
   const gamesFinished = response.games.filter(game => game.over === true).length
   $('#gamesPlayed').text('Player has played ' + response.games.length + ' games')
   $('#gamesFinished').text('Player has finished ' + gamesFinished + ' games')
-  console.log(response)
 }
 
 const onGetGamesForUserFailure = function (response) {
-  console.log(response)
+  notificationMessage('Failed to get user stats')
+  $('#gamesPlayed').text('')
+  $('#gamesFinished').text('')
 }
 
 const onJoinGameSuccess = function (response) {
   store.game = response.game
-  console.log(response)
 }
 
 const onJoinGameFailure = function (response) {
-  console.log(response)
+  notificationMessage('Failed to join game')
 }
 
 const onNewOnlineGameSuccess = function () {
+  notificationMessage('')
   $('#currentGameId').text('Current Game Id: ' + store.game.id)
 }
 
 const onNewOnlineGameFailure = function (response) {
-  console.log(response)
+  notificationMessage('Failed to start a new online game')
 }
 
 module.exports = {
   loginToPlay,
   onTurnChange,
-  updateBoard,
   updateCell,
   clearBoard,
+  notificationMessage,
+  successMessage,
   onWin,
   onDraw,
   onSignUpSuccess,

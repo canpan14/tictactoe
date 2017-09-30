@@ -20,6 +20,7 @@ const onBoardClick = function (event) {
   }
   // Can only play after starting a new game
   if (!store.game) {
+    ui.notificationMessage('Start a new game to play')
     return
   }
   // Ignore click not on a cell
@@ -124,6 +125,9 @@ const onJoinGame = function (event) {
     .then(() => {
       controller.joinExisitingGame(store.game.player_x.id)
     })
+    .then(() => {
+      ui.successMessage('Join Game Success', 3000)
+    })
     .catch(ui.onJoinGameFailure)
 }
 
@@ -131,7 +135,7 @@ const createWatcher = function (gameId) {
   gameWatcher = rW.resourceWatcher(config.apiOrigin + '/games/' + gameId + '/watch',
     {
       Authorization: 'Token token=' + store.user.token,
-      timeout: 120
+      timeout: 60
     })
   gameWatcher.on('change', onMultiplayerUpdate)
 }
@@ -182,9 +186,12 @@ const onMultiplayerUpdate = function (data) {
   } else if (data.game) {
     if (data.game.player_o_id) {
       controller.otherPlayerJoin(data.game.player_o_id[1])
+      ui.successMessage('Other Player Joined', 3000)
     }
   } else if (data.timeout) { // not an error
     gameWatcher.close()
+    controller.setGameOver(true)
+    ui.notificationMessage('Game timed out')
   }
 }
 
