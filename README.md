@@ -23,6 +23,10 @@ Small issues and less than idea design decisions made in the early planning for 
 Also there were a number of instances of reusing code written for local play for multiplayer.
 That became an issue because any change made to multiplayer cause the need for a full retest of local play.
 
+Biggest changes I would make in future iterations would really be entire overhalls of the event -> controller/ui process.
+Also numerous areas where code should be encapsulated and more reusable.
+Knowing I was going to get this far in the project I should have planned out the code design with multiplayer in mind from the beginning.
+
 I used stack overflow, w3, and jquery docs for the majority of my help.
 
 Link to writeframes and user stories: https://git.generalassemb.ly/canpan14/game-project-scope-study/blob/response/study.md
