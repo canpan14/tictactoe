@@ -175,6 +175,7 @@ const onNewOnlineGameFailure = function (response) {
 
 const onShowGameSuccess = function (response) {
   delete store.game
+  console.log(response)
   $('#playerTurnText').text('')
   $('#currentGameId').text('')
   $('#successMessage').text('')

@@ -66,6 +66,7 @@ const takeTurn = function (event) {
   isOnlineCanMove = false
   makeMove(event) // Make the move on the board
   analyzeBoardState() // Check the new board for a win/draw and handle it
+  return true
 }
 
 /**
