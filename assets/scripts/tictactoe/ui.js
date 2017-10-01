@@ -94,6 +94,7 @@ const onSignInFailure = function (response) {
 
 const onSignOutSuccess = function () {
   delete store.user
+  delete store.game
   clearBoard()
   deactivateButtons()
   $('#playerTurnText').text('')
