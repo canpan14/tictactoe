@@ -31,11 +31,7 @@ const onBoardClick = function (event) {
   if (event.target.innerHTML) {
     return
   }
-  // Check if it's a legal move
-  if (!controller.isLegalMove(event)) {
-    return
-  }
-  controller.takeTurn(event)
+  if (!controller.takeTurn(event)) return // Don't update on illegal move
   onUpdateGame(controller.getRecentMove())
     .then(() => {
       if (controller.isGameOver()) {
@@ -45,12 +41,12 @@ const onBoardClick = function (event) {
     })
 }
 
-const onLogin = function (event) {
+const onSignIn = function (event) {
   event.preventDefault()
   const formData = getFormFields(event.target)
   api.signIn(formData)
     .then(ui.onSignInSuccess)
-    .then(ui.activateNewGameButtons)
+    .then(ui.activateButtons)
     .then(() => onGetGamesForUser())
     .catch(ui.onSignInFailure)
 }
@@ -64,8 +60,7 @@ const onSignUp = function (event) {
 }
 
 const onSignUpHide = function (event) {
-  $(this).find('form')[0].reset()
-  $('#signInError').text('')
+  ui.clearSignInForm(event)
 }
 
 const onSignOut = function (event) {
@@ -85,8 +80,7 @@ const onChangePassword = function (event) {
 }
 
 const onChangePasswordHide = function (event) {
-  $(this).find('form')[0].reset()
-  $('#changePasswordError').text('')
+  ui.clearChangePasswordForm(event)
 }
 
 const onResetGame = function (event) {
@@ -176,6 +170,8 @@ const onMultiplayerUpdate = function (data) {
       const before = changes[0]
       const after = changes[1]
       // Check if after and current board are the same and ignore if they are,
+      // Added because watcher was getting it's own change reflected back at
+      // itself when the other user updated based off the change sent out.
       const currentBoard = gameBoard.get1DBoard()
       for (let i = 0; i < currentBoard.length; i++) {
         let currentBoardAtI = ''
@@ -208,7 +204,7 @@ const onMultiplayerUpdate = function (data) {
   } else if (data.timeout) { // not an error
     gameWatcher.close()
     controller.setGameOver(true)
-    ui.notificationMessage('Game timed out')
+    ui.onOnlineTimeout()
   }
 }
 
@@ -220,7 +216,7 @@ const closeGameWatcher = function () {
 
 const registerHandlers = function () {
   $('#gameBoard').on('mouseup', onBoardClick)
-  $('#loginContainer').on('submit', onLogin)
+  $('#loginContainer').on('submit', onSignIn)
   $('#signUp').on('submit', onSignUp)
   $('#signUpModal').on('hidden.bs.modal', onSignUpHide)
   $('#signOut').on('click', onSignOut)

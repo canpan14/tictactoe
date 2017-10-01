@@ -62,7 +62,7 @@ const initializeGame = function () {
  * @return {undefined}
  */
 const takeTurn = function (event) {
-  if (!isLegalMove(event)) return // Do nothing if illegal move
+  if (!isLegalMove(event)) return false
   isOnlineCanMove = false
   makeMove(event) // Make the move on the board
   analyzeBoardState() // Check the new board for a win/draw and handle it

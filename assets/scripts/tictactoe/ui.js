@@ -10,9 +10,11 @@ const updateCell = function (cell, marker) {
   cell.innerHTML = marker
 }
 
-const activateNewGameButtons = function () {
+const activateButtons = function () {
   $('#newGame').attr('disabled', false)
   $('#newOnlineGame').attr('disabled', false)
+  $('#joinGameButton').attr('disabled', false)
+  $('#viewGameButton').attr('disabled', false)
 }
 
 const clearBoard = function () {
@@ -37,6 +39,16 @@ const successMessage = function (text, time) {
   }, time)
 }
 
+const clearSignInForm = function (event) {
+  $(event.target).find('form')[0].reset()
+  $('#signInError').text('')
+}
+
+const clearChangePasswordForm = function (event) {
+  $(event.target).find('form')[0].reset()
+  $('#changePasswordError').text('')
+}
+
 const onTurnChange = function (currentPlayer) {
   $('#playerTurnText').text(currentPlayer.name + '\'s turn')
 }
@@ -55,18 +67,17 @@ const onSignUpSuccess = function (response) {
 }
 
 const onSignUpFailure = function (response) {
-  $('#signInError').text('Bad sign up attempt.')
+  $('#signInError').text('Bad sign up attempt')
 }
 
 const onSignInSuccess = function (response) {
   store.user = response.user
+  $('#signedInAs').text('Signed in as ' + store.user.id)
   $('#badLoginAttempt').text('')
   $('#notification').text('')
   $('#loginContainer').hide()
   $('#loginContainer').find('form')[0].reset()
   $('#signedIn').css('display', 'flex')
-  $('#joinGameButton').attr('disabled', false)
-  $('#viewGameButton').attr('disabled', false)
 }
 
 const onSignInFailure = function (response) {
@@ -92,8 +103,9 @@ const onSignOutSuccess = function () {
 }
 
 const onSignOutFailure = function (response) {
-  $('#signedIn').css('display', 'none')
-  $('#loginContainer').show()
+  // If signout fails it's because there is an auth issue so they should
+  // be forced to relog which is the same as a sign out success in this case
+  onSignOutSuccess()
 }
 
 const onChangePasswordSuccess = function () {
@@ -102,7 +114,7 @@ const onChangePasswordSuccess = function () {
 }
 
 const onChangePasswordFailure = function (response) {
-  $('#changePasswordError').text('Bad change password attempt.')
+  $('#changePasswordError').text('Bad change password attempt')
 }
 
 const onNewGameSuccess = function (response) {
@@ -117,6 +129,7 @@ const onNewGameFailure = function (response) {
 }
 
 const onUpdateGameSuccess = function (response) {
+  notificationMessage('')
 }
 
 const onUpdateGameFailure = function (response) {
@@ -172,6 +185,10 @@ const onShowGameFailure = function (response) {
   console.log(response)
 }
 
+const onOnlineTimeout = function () {
+  notificationMessage('Game timed out')
+}
+
 module.exports = {
   loginToPlay,
   onTurnChange,
@@ -179,6 +196,8 @@ module.exports = {
   clearBoard,
   notificationMessage,
   successMessage,
+  clearSignInForm,
+  clearChangePasswordForm,
   onWin,
   onDraw,
   onSignUpSuccess,
@@ -197,9 +216,10 @@ module.exports = {
   onGetGamesForUserFailure,
   onJoinGameSuccess,
   onJoinGameFailure,
-  activateNewGameButtons,
+  activateButtons,
   onNewOnlineGameSuccess,
   onNewOnlineGameFailure,
   onShowGameSuccess,
-  onShowGameFailure
+  onShowGameFailure,
+  onOnlineTimeout
 }
