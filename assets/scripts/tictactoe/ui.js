@@ -17,6 +17,13 @@ const activateButtons = function () {
   $('#viewGameButton').attr('disabled', false)
 }
 
+const deactivateButtons = function () {
+  $('#newGame').attr('disabled', true)
+  $('#newOnlineGame').attr('disabled', true)
+  $('#joinGameButton').attr('disabled', true)
+  $('#viewGameButton').attr('disabled', true)
+}
+
 const clearBoard = function () {
   $('#notification').text('')
   $('#successMessage').text('')
@@ -72,6 +79,7 @@ const onSignUpFailure = function (response) {
 
 const onSignInSuccess = function (response) {
   store.user = response.user
+  activateButtons()
   $('#signedInAs').text('Signed in as ' + store.user.id)
   $('#badLoginAttempt').text('')
   $('#notification').text('')
@@ -87,10 +95,7 @@ const onSignInFailure = function (response) {
 const onSignOutSuccess = function () {
   delete store.user
   clearBoard()
-  $('#newGame').attr('disabled', true)
-  $('#newOnlineGame').attr('disabled', true)
-  $('#joinGameButton').attr('disabled', true)
-  $('#viewGameButton').attr('disabled', true)
+  deactivateButtons()
   $('#playerTurnText').text('')
   $('#gamesPlayed').text('')
   $('#gamesFinished').text('')
@@ -198,6 +203,7 @@ module.exports = {
   successMessage,
   clearSignInForm,
   clearChangePasswordForm,
+  onOnlineTimeout,
   onWin,
   onDraw,
   onSignUpSuccess,
@@ -216,10 +222,8 @@ module.exports = {
   onGetGamesForUserFailure,
   onJoinGameSuccess,
   onJoinGameFailure,
-  activateButtons,
   onNewOnlineGameSuccess,
   onNewOnlineGameFailure,
   onShowGameSuccess,
-  onShowGameFailure,
-  onOnlineTimeout
+  onShowGameFailure
 }

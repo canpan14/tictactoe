@@ -46,7 +46,6 @@ const onSignIn = function (event) {
   const formData = getFormFields(event.target)
   api.signIn(formData)
     .then(ui.onSignInSuccess)
-    .then(ui.activateButtons)
     .then(() => onGetGamesForUser())
     .catch(ui.onSignInFailure)
 }
