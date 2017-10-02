@@ -1,15 +1,5 @@
-Produce documentation in the form of a README, which must:
-
- Pin your repository on GitHub as a Popular Repository
-Make sure it has a description so that employers can see it
- Link to your hosted game in the URL section of your Github repo.
- List technologies used
- Document your planning and tell a story about your development process and problem-solving strategy.
- List unsolved problems which would be fixed in future iterations.
- Link to wireframes and user stories.
-
-
 Tic-Tac-Toe
+By Sam Machlin
 
 Link to game: https://canpan14.github.io/tictactoe/
 
@@ -30,5 +20,3 @@ Knowing I was going to get this far in the project I should have planned out the
 I used stack overflow, w3, and jquery docs for the majority of my help.
 
 Link to writeframes and user stories: https://git.generalassemb.ly/canpan14/game-project-scope-study/blob/response/study.md
-
-By Sam Machlin
