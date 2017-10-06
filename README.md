@@ -16,12 +16,26 @@ The idea was to make a very simple UI and focus on the game logic/functionality 
 
 ## Development and Problem Solving
 Outside of small notification additionals, the UI mostly didn't change since day 1.
-After the basic local gameplay was done I moved onto multiplayer.
-That's when things went downhill.
-I got multiplayer to work but the code became much more hacky than I would like.
-Small issues and less than idea design decisions made in the early planning for just local play became road blocks.
-Also there were a number of instances of reusing code written for local play for multiplayer.
-That became an issue because any change made to multiplayer cause the need for a full retest of local play.
+Most of the problem solving I did on the UI was changing parts to bootstrap so
+it would be more responsive to different screen sizes.
+
+After the basic local gameplay was done I fully tested it for defects and opened
+up a second branch to move onto multiplayer. This was done so if multiplayer
+went very badly I could always fallback on the local play only game version.
+
+I got multiplayer to work after a bit of a struggle that was largely because
+instead of rescoping and seperating the local code from the online, I smashed
+them together. Lesson learned there.
+
+The majoritory of problem solving around multiplayer was understanding how data
+was passed around by the api, and learning how the watcher worked. I took notes
+on paper following the flow of my code, and documenting when and where the
+watcher would react and send data across the server. Doing that not only allowed
+me to arrive at the solution but additionaly showed me code flow issues.
+
+I heavily used google/stackoverflow/js documentation throughout the project to
+help with asynchronus issues as well which are common aspecially when working
+with multiplayer.
 
 ## Future Versions
 Biggest changes I would make in future iterations would really be entire overhalls of the event -> controller/ui process.
