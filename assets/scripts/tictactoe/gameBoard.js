@@ -2,7 +2,7 @@
 
 const arrayHelpers = require('./arrayHelpers')
 
-const boardArray = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+const boardArray = [[], [], []]
 
 const makeMove = function (player, row, col) {
   boardArray[row][col] = player
@@ -20,7 +20,7 @@ const checkForWin = function () {
 const resetBoard = function () {
   for (let i = 0; i < boardArray.length; i++) {
     for (let j = 0; j < boardArray[i].length; j++) {
-      boardArray[i][j] = 0
+      boardArray[i][j] = null
     }
   }
 }
@@ -70,8 +70,9 @@ const checkDownLeft = function () {
 }
 
 const isArrayAllSameValues = function (arr) {
+  if (arr.length < 3) return false
   return arr.every(ele => {
-    return (ele === arr[0] && ele !== 0)
+    return (ele === arr[0] && ele !== null & ele !== undefined)
   })
 }
 

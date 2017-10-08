@@ -123,14 +123,14 @@ const onChangePasswordFailure = function (response) {
   $('#changePasswordError').text('Bad change password attempt')
 }
 
-const onNewGameSuccess = function (response) {
+const onNewOfflineGameSuccess = function (response) {
   notificationMessage('')
   $('#viewGameMessage').text('')
   store.game = response.game
   $('#currentGameId').text('Current Game Id: ' + store.game.id)
 }
 
-const onNewGameFailure = function (response) {
+const onNewOfflineGameFailure = function (response) {
   notificationMessage('Failed to start a new game')
 }
 
@@ -216,8 +216,8 @@ module.exports = {
   onSignOutFailure,
   onChangePasswordSuccess,
   onChangePasswordFailure,
-  onNewGameSuccess,
-  onNewGameFailure,
+  onNewOfflineGameSuccess,
+  onNewOfflineGameFailure,
   onUpdateGameSuccess,
   onUpdateGameFailure,
   onGetGamesForUserSuccess,

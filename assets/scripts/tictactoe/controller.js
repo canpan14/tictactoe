@@ -17,36 +17,32 @@ let isOnlineGame = false
 let isOtherPlayerJoin = false
 
 // External functions
-/**
- * Returns true if the game is over
- * @return {boolean} True is game is over, else false
- */
-const isGameOver = function () {
-  return gameOver
+const isGameOver = () => gameOver
+
+const getTurnCounter = () => turnCounter
+
+const getRecentMove = () => recentMove
+
+const newOfflineGame = function () {
+  clearCurrentGame()
+  initializeVariables(false)
 }
 
-/**
- * Returns the current turn number
- * @return {number} Current Turn
- */
-const getTurnCounter = function () {
-  return turnCounter
+const newOnlineGame = function () {
+  clearCurrentGame()
+  initializeVariables(true)
 }
 
-/**
- * Returns the most recent move
- * @return {Move} Move object
- */
-const getRecentMove = function () {
-  return recentMove
-}
-
-/**
- * Initializes the game state on page load
- * @return {undefined}
- */
-const initializeGame = function () {
+const clearCurrentGame = function () {
+  gameOver = true
+  isOnlineCanMove = false
   gameBoard.resetBoard()
+  ui.clearBoard()
+}
+
+const initializeVariables = function (isOnline = false) {
+  isOnlineGame = isOnline
+  isOnlineCanMove = false
   players.length = 0
   turnCounter = 0
   currentPlayer = null
@@ -56,29 +52,12 @@ const initializeGame = function () {
   changeTurns()
 }
 
-/**
- * Main flow of the game that runs after each board click
- * @param  {event} event Click event from clicking on the game board
- * @return {undefined}
- */
 const takeTurn = function (event) {
   if (!isLegalMove(event)) return false
-  isOnlineCanMove = false
+  if (isOnlineGame) isOnlineCanMove = false
   makeMove(event) // Make the move on the board
   analyzeBoardState() // Check the new board for a win/draw and handle it
   return true
-}
-
-/**
- * Resets the current game
- * @return {undefined}
- */
-const resetGame = function () {
-  gameOver = true
-  isOnlineCanMove = false
-  isOnlineGame = false
-  ui.clearBoard()
-  initializeGame()
 }
 
 const setOnlineGame = function (isOnline) {
@@ -208,9 +187,8 @@ const analyzeBoardState = function () {
 // Exports
 module.exports = {
   getTurnCounter,
-  initializeGame,
+  initializeVariables,
   takeTurn,
-  resetGame,
   getRecentMove,
   isGameOver,
   setGameOver,
@@ -218,5 +196,7 @@ module.exports = {
   joinExisitingGame,
   otherPlayerJoin,
   isLegalMove,
-  setOnlineGame
+  setOnlineGame,
+  newOfflineGame,
+  newOnlineGame
 }

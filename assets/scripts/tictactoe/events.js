@@ -82,20 +82,12 @@ const onChangePasswordHide = function (event) {
   ui.clearChangePasswordForm(event)
 }
 
-const onResetGame = function (event) {
-  controller.resetGame()
-  onNewGame()
-    .then(() => {
-      onGetGamesForUser()
-    })
-}
-
-const onNewGame = function () {
+const onNewOfflineGame = function () {
   return api.newGame()
-    .then(ui.onNewGameSuccess)
+    .then(ui.onNewOfflineGameSuccess)
     .then(closeGameWatcher)
-    .then(controller.initializeGame)
-    .catch(ui.onNewGameFailure)
+    .then(controller.newOfflineGame)
+    .catch(ui.onNewOfflineGameFailure)
 }
 
 const onUpdateGame = function (move) {
@@ -115,7 +107,7 @@ const onJoinGame = function (event) {
   api.joinGame(event.target.id.value)
     .then(ui.onJoinGameSuccess)
     .then(closeGameWatcher)
-    .then(controller.resetGame)
+    .then(controller.newOnlineGame)
     .then(() => {
       createWatcher(event.target.id.value)
     })
@@ -150,10 +142,10 @@ const onShowGame = function (event) {
 }
 
 const onNewOnlineGame = function (event) {
-  onNewGame()
+  onNewOfflineGame()
     .then(ui.onNewOnlineGameSuccess)
     .then(closeGameWatcher)
-    .then(controller.resetGame)
+    .then(controller.newOnlineGame)
     .then(() => {
       createWatcher(store.game.id)
     })
@@ -221,7 +213,7 @@ const registerHandlers = function () {
   $('#signOut').on('click', onSignOut)
   $('#changePassword').on('submit', onChangePassword)
   $('#changePasswordModal').on('hidden.bs.modal', onChangePasswordHide)
-  $('#newGame').on('click', onResetGame)
+  $('#newGame').on('click', onNewOfflineGame)
   $('#newOnlineGame').on('click', onNewOnlineGame)
   $('#multiplayerJoin').on('submit', onJoinGame)
   $('#viewPreviousGame').on('submit', onShowGame)
