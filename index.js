@@ -5,7 +5,10 @@
 
 // load manifests
 // scripts
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 require('bootstrap-validator')
+require('bootstrap-notify')
 require('./assets/scripts/index.js')
 
 // styles

@@ -8,7 +8,7 @@ module.exports = {
     entry: {
       application: './index.js',
       specs: './spec/_all.js',
-      vendor: ['jquery', 'bootstrap-sass']
+      vendor: ['jquery', 'bootstrap']
     },
 
     output: {
@@ -25,7 +25,8 @@ module.exports = {
       new webpack.ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery',
-        'window.jQuery': 'jquery'
+        'window.jQuery': 'jquery',
+        Popper: ['popper.js', 'default']
       })
     ],
 
@@ -51,6 +52,18 @@ module.exports = {
           use: [
             { loader: 'style-loader' },
             { loader: 'css-loader' },
+            {
+              loader: 'postcss-loader', // Run post css actions
+              options: {
+                plugins: function () { // post css plugins, can be exported to postcss.config.js
+                  return [
+                    require('postcss-flexbugs-fixes'),
+                    require('precss'),
+                    require('autoprefixer')
+                  ]
+                }
+              }
+            },
             {
               loader: 'sass-loader',
               options: {

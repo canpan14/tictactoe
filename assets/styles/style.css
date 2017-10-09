@@ -1,10 +1,3 @@
-header {
-  background: #000;
-  color: #FFF;
-  display: block;
-  height: 104px;
-}
-
 main {
   margin: 0 auto;
   text-align: center;
@@ -30,21 +23,8 @@ main {
   margin: 0 auto;
 }
 
-.loginContainer {
-  display: block;
-  float: right;
-}
-
-.loginContainer input {
-  color: #000;
-}
-
-.loginButton {
-  background: white;
-  border: none;
-  color: black;
-  margin: 0 2px;
-  padding: 2px 6px;
+.loginLabels {
+  color: white;
 }
 
 .notification {
@@ -56,10 +36,6 @@ main {
 .playerTurn {
   margin: 0 auto;
   text-align: center;
-}
-
-.signedIn {
-  float: right;
 }
 
 .signup {

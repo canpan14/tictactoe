@@ -35,6 +35,24 @@ const clearBoard = function () {
   }
 }
 
+const greenNotification = function (text, time) {
+  $.notify({
+    message: text
+  }, {
+    type: 'success',
+    placement: {
+      from: 'top',
+      align: 'center'
+    },
+    animate: {
+      enter: 'animated fadeInDown',
+      exit: 'animated fadeOutUp'
+    },
+    delay: time,
+    timer: 1000
+  })
+}
+
 const notificationMessage = function (text) {
   $('#notification').text(text)
 }
@@ -49,6 +67,11 @@ const successMessage = function (text, time) {
 const clearSignInForm = function (event) {
   $(event.target).find('form')[0].reset()
   $('#signInError').text('')
+}
+
+const clearSignUpForm = function (event) {
+  $(event.target).find('form')[0].reset()
+  $('#signUpError').text('')
 }
 
 const clearChangePasswordForm = function (event) {
@@ -78,13 +101,16 @@ const onSignUpFailure = function (response) {
 }
 
 const onSignInSuccess = function (response) {
+  $('#signInModal').modal('hide')
   store.user = response.user
+  setTimeout(() => {
+    greenNotification('Signed In Succesfully', 3000)
+  }, 500)
   activateButtons()
   $('#signedInAs').text('Signed in as ' + store.user.id)
   $('#badLoginAttempt').text('')
   $('#notification').text('')
-  $('#loginContainer').hide()
-  $('#loginContainer').find('form')[0].reset()
+  $('#signInNav').hide()
   $('#signedIn').css('display', 'flex')
 }
 
@@ -105,7 +131,7 @@ const onSignOutSuccess = function () {
   $('#successMessage').text('')
   $('#viewGameMessage').text('')
   $('#signedIn').css('display', 'none')
-  $('#loginContainer').show()
+  $('#signInNav').show()
 }
 
 const onSignOutFailure = function (response) {
@@ -204,6 +230,7 @@ module.exports = {
   notificationMessage,
   successMessage,
   clearSignInForm,
+  clearSignUpForm,
   clearChangePasswordForm,
   onOnlineTimeout,
   onWin,

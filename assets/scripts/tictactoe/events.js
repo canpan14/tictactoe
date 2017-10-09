@@ -62,6 +62,11 @@ const onSignUpHide = function (event) {
   ui.clearSignInForm(event)
 }
 
+const onSignInHide = function (event) {
+  ui.clearSignUpForm(event)
+  $('#badLoginAttempt').text('')
+}
+
 const onSignOut = function (event) {
   event.preventDefault()
   api.signOut()
@@ -207,12 +212,13 @@ const closeGameWatcher = function () {
 
 const registerHandlers = function () {
   $('#gameBoard').on('mouseup', onBoardClick)
-  $('#loginContainer').on('submit', onSignIn)
+  $('#signIn').on('submit', onSignIn)
   $('#signUp').on('submit', onSignUp)
   $('#signUpModal').on('hidden.bs.modal', onSignUpHide)
+  $('#signInModal').on('hidden.bs.modal', onSignInHide)
+  $('#changePasswordModal').on('hidden.bs.modal', onChangePasswordHide)
   $('#signOut').on('click', onSignOut)
   $('#changePassword').on('submit', onChangePassword)
-  $('#changePasswordModal').on('hidden.bs.modal', onChangePasswordHide)
   $('#newGame').on('click', onNewOfflineGame)
   $('#newOnlineGame').on('click', onNewOnlineGame)
   $('#multiplayerJoin').on('submit', onJoinGame)

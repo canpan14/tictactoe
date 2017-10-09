@@ -1,3 +1,8 @@
-@import 'node_modules/bootstrap/scss/bootstrap';
-@import './normalize.css';
+// $icon-font-path: '/assets/stylesheets/_bootstrap.scss';
+// @import 'node_modules/bootstrap/scss/bootstrap';
+// $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+// @import '~bootstrap-sass/assets/stylesheets/bootstrap';
+// @import './normalize.css';
+@import './custom';
 @import './style.css';
+@import '~bootstrap/scss/bootstrap';
