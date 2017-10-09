@@ -202,7 +202,6 @@ const onNewOnlineGameFailure = function (response) {
 
 const onShowGameSuccess = function (response) {
   delete store.game
-  console.log(response)
   $('#playerTurnText').text('')
   $('#currentGameId').text('')
   $('#successMessage').text('')
@@ -215,7 +214,7 @@ const onShowGameSuccess = function (response) {
 }
 
 const onShowGameFailure = function (response) {
-  console.log(response)
+  notificationMessage('Could not view game')
 }
 
 const onOnlineTimeout = function () {

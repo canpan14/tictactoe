@@ -171,7 +171,7 @@ const onMultiplayerUpdate = function (data) {
       const currentBoard = gameBoard.get1DBoard()
       for (let i = 0; i < currentBoard.length; i++) {
         let currentBoardAtI = ''
-        if (currentBoard[i] !== 0) {
+        if (!!currentBoard[i] === true) {
           currentBoardAtI = currentBoard[i].boardMarker.toLowerCase()
         }
         if (currentBoardAtI !== after[i]) {
