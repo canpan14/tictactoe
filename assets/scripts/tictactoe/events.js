@@ -160,6 +160,14 @@ const onNewOnlineGame = function (event) {
     .catch(ui.onNewOnlineGameFailure)
 }
 
+const onJoinOrViewGame = function (event) {
+  if (event.target.id.value === "joinGameButton") {
+    onJoinGame(event)
+  } else {
+    onShowGame(event)
+  }
+}
+
 const onMultiplayerUpdate = function (data) {
   if (data.game && data.game.cells) {
     const diff = changes => {
@@ -221,8 +229,7 @@ const registerHandlers = function () {
   $('#changePassword').on('submit', onChangePassword)
   $('#newGame').on('click', onNewOfflineGame)
   $('#newOnlineGame').on('click', onNewOnlineGame)
-  $('#multiplayerJoin').on('submit', onJoinGame)
-  $('#viewPreviousGame').on('submit', onShowGame)
+  $('#joinOrView').on('submit', onJoinOrViewGame)
 }
 
 module.exports = {

@@ -110,8 +110,8 @@ const onSignInSuccess = function (response) {
   $('#signedInAs').text('Signed in as ' + store.user.id)
   $('#badLoginAttempt').text('')
   $('#notification').text('')
-  $('#signInNav').hide()
-  $('#signedIn').css('display', 'flex')
+  $('.signedOutLink').hide()
+  $('.signedInLink').show()
 }
 
 const onSignInFailure = function (response) {
@@ -130,8 +130,8 @@ const onSignOutSuccess = function () {
   $('#currentGameId').text('')
   $('#successMessage').text('')
   $('#viewGameMessage').text('')
-  $('#signedIn').css('display', 'none')
-  $('#signInNav').show()
+  $('.signedInLink').hide()
+  $('.signedOutLink').show()
 }
 
 const onSignOutFailure = function (response) {

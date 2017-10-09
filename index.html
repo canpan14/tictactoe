@@ -14,22 +14,33 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="#">TicTacToe</a>
+      <div class="signedInLink nav-item" style="display:none">
+        <span id="signedInAs" style="color:white">Signed In</span>
+      </div>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
-          <li id="signInNav" class="nav-item">
+          <li id="signInNav" class="signedOutLink nav-item active">
             <a class="nav-link" data-toggle="modal" href="#signInModal">Sign In</a>
           </li>
-          <li id="signUpNav" class="nav-item">
+          <li id="signUpNav" class="signedOutLink nav-item">
             <a class="nav-link" data-toggle="modal" href="#signUpModal">Sign Up</a>
           </li>
-          <li id="signedIn" style="display:none">
-            <h4 id="signedInAs" style="color:white">Signed In</h4>
-            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#changePasswordModal">Change Password</button>
-            <button id="signOut" class="btn btn-primary" type="button">Sign Out</button>
+          <li class="signedInLink nav-item" style="display:none">
+            <form class='form' id="joinOrView">
+              <input class="form-control mr-2 col-12" type="text" name="id" placeholder="Enter Game #" required>
+              <button class="btn btn-outline-success my-2 my-1 col-5" type="submit" id="joinGameButton" disabled>Join</button>
+              <button class="btn btn-outline-success my-2 my-1 col-5" type="submit" id="viewGameButton" disabled>View</button>
+            </form>
+          </li>
+          <li class="signedInLink nav-item" style="display:none">
+            <a class="nav-link" data-toggle="modal" href="#changePasswordModal">Change Password</a>
+          </li>
+          <li class="signedInLink nav-item active" style="display:none">
+            <a class="nav-link" id="signOut">Sign Out</a>
           </li>
         </ul>
       </div>
@@ -55,32 +66,12 @@
           </tr>
         </table>
       </div>
-      <div class="row justify-content-center">
+      <div class="row justify-content-center mb-1">
         <button id="newGame" class="btn btn-primary col-8" disabled>New Local Game</button>
       </div>
-      <div class="row justify-content-center">
+      <div class="row justify-content-center mb-1">
         <button id="newOnlineGame" class="btn btn-secondary col-8" disabled>New Online Game</button>
       </div>
-      <form class='form' id="multiplayerJoin">
-        <div class="form-group">
-          <div class="row justify-content-center">
-            <div class="col-6">
-              <input class="form-control" type="text" name="id" placeholder="Enter Game #" required>
-            </div>
-            <button class="col-2 btn btn-primary" type="submit" id="joinGameButton" disabled>Join</button>
-          </div>
-        </div>
-      </form>
-      <form class='form' id="viewPreviousGame">
-        <div class="form-group">
-          <div class="row justify-content-center">
-            <div class="col-6">
-              <input class="form-control" type="text" name="id" placeholder="Enter Game #" required>
-            </div>
-            <button class="col-2 btn btn-primary" type="submit" id="viewGameButton" disabled>View</button>
-          </div>
-        </div>
-      </form>
       <div class="playerTurn"><h3 id="playerTurnText"></h3></div>
       <div><h3 id="viewGameMessage"></h3></div>
       <div class='successMessage'><h2 id='successMessage'></h2></div>
@@ -123,7 +114,7 @@
       </div>
     </div>
 
-    <div id='signUpModal' class='modal fade' role='dialog' tabindex='-1' aria-hidden='true' data-backdrop="false">
+    <div id='signUpModal' class='modal fade' role='dialog' tabindex='-1' aria-hidden='true'>
       <div class='modal-dialog' role='document'>
         <div class='modal-content'>
           <div class ="modal-header">
@@ -161,7 +152,7 @@
       </div>
     </div>
 
-    <div id='changePasswordModal' class='modal fade' role='dialog' tabindex='-1' aria-hidden='true' data-backdrop="false">
+    <div id='changePasswordModal' class='modal fade' role='dialog' tabindex='-1' aria-hidden='true'>
       <div class='modal-dialog' role='document'>
         <div class='modal-content'>
           <div class ="modal-header">

@@ -19,9 +19,7 @@ const checkForWin = function () {
 
 const resetBoard = function () {
   for (let i = 0; i < boardArray.length; i++) {
-    for (let j = 0; j < boardArray[i].length; j++) {
-      boardArray[i][j] = null
-    }
+    boardArray[i] = []
   }
 }
 
@@ -70,9 +68,11 @@ const checkDownLeft = function () {
 }
 
 const isArrayAllSameValues = function (arr) {
+  arr = arr.filter(ele => ele !== undefined)
   if (arr.length < 3) return false
+  console.log(arr)
   return arr.every(ele => {
-    return (ele === arr[0] && ele !== null & ele !== undefined)
+    return (ele === arr[0] && ele !== null && ele !== undefined && !!ele === true)
   })
 }
 
