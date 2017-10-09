@@ -109,12 +109,12 @@ const onGetGamesForUser = function () {
 
 const onJoinGame = function (event) {
   event.preventDefault()
-  api.joinGame(event.target.id.value)
+  api.joinGame(event.target.form[0].value)
     .then(ui.onJoinGameSuccess)
     .then(closeGameWatcher)
     .then(controller.newOnlineGame)
     .then(() => {
-      createWatcher(event.target.id.value)
+      createWatcher(event.target.form[0].value)
     })
     .then(() => {
       controller.joinExisitingGame(store.game.player_x.id)
@@ -136,7 +136,7 @@ const createWatcher = function (gameId) {
 
 const onShowGame = function (event) {
   event.preventDefault()
-  api.showGame(event.target.id.value)
+  api.showGame(event.target.form[0].value)
     .then((response) => {
       controller.setGameOver(true)
       return response
@@ -158,14 +158,6 @@ const onNewOnlineGame = function (event) {
       controller.setOnlineGame(true)
     })
     .catch(ui.onNewOnlineGameFailure)
-}
-
-const onJoinOrViewGame = function (event) {
-  if (event.target.id.value === "joinGameButton") {
-    onJoinGame(event)
-  } else {
-    onShowGame(event)
-  }
 }
 
 const onMultiplayerUpdate = function (data) {
@@ -229,7 +221,8 @@ const registerHandlers = function () {
   $('#changePassword').on('submit', onChangePassword)
   $('#newGame').on('click', onNewOfflineGame)
   $('#newOnlineGame').on('click', onNewOnlineGame)
-  $('#joinOrView').on('submit', onJoinOrViewGame)
+  $('#joinGameButton').on('click', onJoinGame)
+  $('#viewGameButton').on('click', onShowGame)
 }
 
 module.exports = {
