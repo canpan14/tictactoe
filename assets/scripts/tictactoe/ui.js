@@ -3,7 +3,7 @@
 const store = require('../store')
 
 const loginToPlay = function () {
-  notificationMessage('Please login to play')
+  redNotification('Please login to play', 500)
 }
 
 const updateCell = function (cell, marker) {
@@ -35,7 +35,7 @@ const clearBoard = function () {
   }
 }
 
-const greenNotification = function (text, time) {
+const greenNotification = function (text, time = 1000) {
   $.notify({
     message: text
   }, {
@@ -48,8 +48,28 @@ const greenNotification = function (text, time) {
       enter: 'animated fadeInDown',
       exit: 'animated fadeOutUp'
     },
+    z_index: 1070,
     delay: time,
-    timer: 1000
+    timer: 500
+  })
+}
+
+const redNotification = function (text, time = 1000) {
+  $.notify({
+    message: text
+  }, {
+    type: 'danger',
+    placement: {
+      from: 'top',
+      align: 'center'
+    },
+    animate: {
+      enter: 'animated fadeInDown',
+      exit: 'animated fadeOutUp'
+    },
+    z_index: 1070,
+    delay: time,
+    timer: 500
   })
 }
 
@@ -93,19 +113,17 @@ const onDraw = function () {
 
 const onSignUpSuccess = function (response) {
   $('#signUpModal').modal('hide')
-  successMessage('Sign Up Successful', 5000)
+  successMessage('Sign Up Successful', 2000)
 }
 
 const onSignUpFailure = function (response) {
-  $('#signInError').text('Bad sign up attempt')
+  redNotification('Email taken or passwords don\'t match', 1000)
 }
 
 const onSignInSuccess = function (response) {
   $('#signInModal').modal('hide')
   store.user = response.user
-  setTimeout(() => {
-    greenNotification('Signed In Succesfully', 3000)
-  }, 500)
+  greenNotification('Signed In Succesfully', 1000)
   activateButtons()
   $('#signedInAs').text('Signed in as ' + store.user.id)
   $('#badLoginAttempt').text('')
@@ -115,10 +133,11 @@ const onSignInSuccess = function (response) {
 }
 
 const onSignInFailure = function (response) {
-  $('#badLoginAttempt').text('Bad email or password')
+  redNotification('Incorrect email or password', 500)
 }
 
 const onSignOutSuccess = function () {
+  greenNotification('Signed out successfully', 500)
   delete store.user
   delete store.game
   clearBoard()
@@ -142,11 +161,11 @@ const onSignOutFailure = function (response) {
 
 const onChangePasswordSuccess = function () {
   $('#changePasswordModal').modal('hide')
-  successMessage('Change Password Successful', 5000)
+  greenNotification('Password changed successfully', 500)
 }
 
 const onChangePasswordFailure = function (response) {
-  $('#changePasswordError').text('Bad change password attempt')
+  redNotification('Old or new passwords invalid', 500)
 }
 
 const onNewOfflineGameSuccess = function (response) {
@@ -157,7 +176,7 @@ const onNewOfflineGameSuccess = function (response) {
 }
 
 const onNewOfflineGameFailure = function (response) {
-  notificationMessage('Failed to start a new game')
+  redNotification('Failed to start a new game', 1000)
 }
 
 const onUpdateGameSuccess = function (response) {
@@ -165,7 +184,7 @@ const onUpdateGameSuccess = function (response) {
 }
 
 const onUpdateGameFailure = function (response) {
-  notificationMessage('Failed to update game on server')
+  redNotification('Failed to update game on server', 500)
 }
 
 const onGetGamesForUserSuccess = function (response) {
@@ -175,7 +194,7 @@ const onGetGamesForUserSuccess = function (response) {
 }
 
 const onGetGamesForUserFailure = function (response) {
-  notificationMessage('Failed to get user stats')
+  redNotification('Failed to get user stats', 1000)
   $('#gamesPlayed').text('')
   $('#gamesFinished').text('')
 }
@@ -187,7 +206,7 @@ const onJoinGameSuccess = function (response) {
 }
 
 const onJoinGameFailure = function (response) {
-  notificationMessage('Failed to join game')
+  redNotification('Failed to join game', 500)
 }
 
 const onNewOnlineGameSuccess = function () {
@@ -197,7 +216,7 @@ const onNewOnlineGameSuccess = function () {
 }
 
 const onNewOnlineGameFailure = function (response) {
-  notificationMessage('Failed to start a new online game')
+  redNotification('Failed to start online game', 500)
 }
 
 const onShowGameSuccess = function (response) {
@@ -214,7 +233,7 @@ const onShowGameSuccess = function (response) {
 }
 
 const onShowGameFailure = function (response) {
-  notificationMessage('Could not view game')
+  redNotification('Failed to view game', 500)
 }
 
 const onOnlineTimeout = function () {
