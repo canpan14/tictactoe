@@ -15,7 +15,7 @@ let gameWatcher
 const onBoardClick = function (event) {
   // Can only play when logged in
   if (!store.user) {
-    ui.loginToPlay()
+    ui.signInToPlay()
     return
   }
   // Can only play after starting a new game

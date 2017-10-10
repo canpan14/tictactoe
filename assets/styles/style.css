@@ -8,10 +8,6 @@ main {
   width: 350px;
 }
 
-.badLoginAttempt {
-  color: red;
-}
-
 .boardContainer {
   margin: 0 auto;
   width: 800px;
@@ -27,10 +23,6 @@ main {
   margin: 0 auto;
 }
 
-.loginLabels {
-  color: white;
-}
-
 .notification {
   color: red;
   margin: 0 auto;
@@ -42,22 +34,8 @@ main {
   text-align: center;
 }
 
-.signup {
-  color: white;
-}
-
-.signup:hover {
-  color: grey;
-}
-
-.signup:focus {
-  color: white;
-}
-
 .square {
-    background-color: #000;
-    border-radius: 10px;
-    color: #FFF;
+    background-color: black;
     font-family: 'Open Sans', sans-serif;
     font-size: 65px;
     height:100px;
@@ -67,11 +45,4 @@ main {
 
 .successMessage {
   color: #1cca1f;
-}
-
-.title {
-  clear: both;
-  display: block;
-  margin: 0 auto;
-  text-align: center
 }

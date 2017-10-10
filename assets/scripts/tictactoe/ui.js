@@ -2,8 +2,8 @@
 
 const store = require('../store')
 
-const loginToPlay = function () {
-  redNotification('Please login to play', 500)
+const signInToPlay = function () {
+  redNotification('Please sign in to play', 500)
 }
 
 const updateCell = function (cell, marker) {
@@ -112,17 +112,14 @@ const successMessage = function (text, time) {
 
 const clearSignInForm = function (event) {
   $(event.target).find('form')[0].reset()
-  $('#signInError').text('')
 }
 
 const clearSignUpForm = function (event) {
   $(event.target).find('form')[0].reset()
-  $('#signUpError').text('')
 }
 
 const clearChangePasswordForm = function (event) {
   $(event.target).find('form')[0].reset()
-  $('#changePasswordError').text('')
 }
 
 const onTurnChange = function (currentPlayer) {
@@ -267,7 +264,7 @@ const onOnlineTimeout = function () {
 }
 
 module.exports = {
-  loginToPlay,
+  signInToPlay,
   startNewGameToPlay,
   onlineWaitForOtherPlayer,
   onlineNotYourTurn,
