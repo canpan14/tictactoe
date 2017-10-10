@@ -10,6 +10,30 @@ const updateCell = function (cell, marker) {
   cell.innerHTML = marker
 }
 
+const startNewGameToPlay = function () {
+  redNotification('Start a local or online game to play', 500)
+}
+
+const onlineWaitForOtherPlayer = function () {
+  redNotification('Wait for another play to join', 500)
+}
+
+const onlineNotYourTurn = function () {
+  redNotification('It is not your turn', 500)
+}
+
+const joiningAnotherGame = function () {
+  greenNotification('Successfully joined game', 1000)
+}
+
+const otherPlayerJoined = function () {
+  greenNotification('Another played joined your game', 1000)
+}
+
+const gameIsOver = function () {
+  redNotification('Game has ended, start a new game to play', 1000)
+}
+
 const activateButtons = function () {
   $('#newGame').attr('disabled', false)
   $('#newOnlineGame').attr('disabled', false)
@@ -244,6 +268,12 @@ const onOnlineTimeout = function () {
 
 module.exports = {
   loginToPlay,
+  startNewGameToPlay,
+  onlineWaitForOtherPlayer,
+  onlineNotYourTurn,
+  joiningAnotherGame,
+  otherPlayerJoined,
+  gameIsOver,
   onTurnChange,
   updateCell,
   clearBoard,

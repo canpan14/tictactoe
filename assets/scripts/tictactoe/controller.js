@@ -138,12 +138,22 @@ const draw = function () {
  * @return {boolean} Return true if move is legal
  */
 const isLegalMove = function (event) {
-  // If gameover or cell is already filled, ignore
-  if (gameOver || event.target.innerHTML) {
+  if (gameOver) {
+    ui.gameIsOver()
+    return false
+  }
+  if (event.target.innerHTML) {
     return false
   }
   if (isOnlineGame) {
-    return isOnlineCanMove && isOtherPlayerJoin
+    if (!isOtherPlayerJoin) {
+      ui.onlineWaitForOtherPlayer()
+      return false
+    }
+    if (!isOnlineCanMove) {
+      ui.onlineNotYourTurn()
+      return false
+    }
   }
   return true
 }

@@ -20,11 +20,15 @@ const onBoardClick = function (event) {
   }
   // Can only play after starting a new game
   if (!store.game) {
-    ui.notificationMessage('Start or join a new game to play')
+    ui.startNewGameToPlay()
     return
   }
   // Ignore click not on a cell
   if (event.target.id === 'gameBoard') {
+    return
+  }
+  if (controller.isGameOver()) {
+    ui.gameIsOver()
     return
   }
   // Ignore click on cell with data in it
@@ -120,7 +124,7 @@ const onJoinGame = function (event) {
       controller.joinExisitingGame(store.game.player_x.id)
     })
     .then(() => {
-      ui.successMessage('Join Game Success', 3000)
+      ui.joiningAnotherGame()
     })
     .catch(ui.onJoinGameFailure)
 }
@@ -195,7 +199,7 @@ const onMultiplayerUpdate = function (data) {
   } else if (data.game) {
     if (data.game.player_o_id) {
       controller.otherPlayerJoin(data.game.player_o_id[1])
-      ui.successMessage('Other Player Joined', 3000)
+      ui.otherPlayerJoined()
     }
   } else if (data.timeout) { // not an error
     gameWatcher.close()
