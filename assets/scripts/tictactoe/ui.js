@@ -48,6 +48,7 @@ const greenNotification = function (text, time = 1000) {
       enter: 'animated fadeInDown',
       exit: 'animated fadeOutUp'
     },
+    allow_dismiss: false,
     z_index: 1070,
     delay: time,
     timer: 500
@@ -67,6 +68,7 @@ const redNotification = function (text, time = 1000) {
       enter: 'animated fadeInDown',
       exit: 'animated fadeOutUp'
     },
+    allow_dismiss: false,
     z_index: 1070,
     delay: time,
     timer: 500
