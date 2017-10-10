@@ -97,46 +97,25 @@ const joinExisitingGame = function (playerId) {
 }
 
 // Interal functions
-/**
- * Creates the initial players
- * @return {undefined}
- */
 const createPlayers = function () {
   players.push(Player.createPlayer(store.user.id, 'Player ' + store.user.id, 'X'))
   players.push(Player.createPlayer(1, 'Player 2', 'O'))
 }
 
-/**
- * Handles a turn change
- * @return {undefined}
- */
 const changeTurns = function () {
   turnCounter++
   currentPlayer = turnCounter % 2 !== 0 ? players[0] : players[1]
   ui.onTurnChange(currentPlayer)
 }
 
-/**
- * Handles a win
- * @return {undefined}
- */
 const win = function () {
   $('#playerTurnText').text(currentPlayer.name + ' wins!')
 }
 
-/**
- * Handles a draw
- * @return {undefined}
- */
 const draw = function () {
   $('#playerTurnText').text('Draw!')
 }
 
-/**
- * Checks if an attempted move is legal
- * @param  {event} event The click event on the board
- * @return {boolean} Return true if move is legal
- */
 const isLegalMove = function (event) {
   if (gameOver) {
     ui.gameIsOver()
@@ -158,11 +137,6 @@ const isLegalMove = function (event) {
   return true
 }
 
-/**
- * Makes the move on the board updating the visual and internal board
- * @param  {event} event The click event on the board
- * @return {undefined}
- */
 const makeMove = function (event) {
   ui.updateCell(event.target, currentPlayer.boardMarker) // Update the cell visually
   const cellClicked = event.target.attributes['data-pos'].value.split(',')
@@ -173,10 +147,6 @@ const makeMove = function (event) {
   gameBoard.makeMove(currentPlayer, r, c)
 }
 
-/**
- * Checks the board for a win or draw and handles it
- * @return {undefined}
- */
 const analyzeBoardState = function () {
   if (!gameBoard.checkForWin()) {
     if (turnCounter >= 9) {
