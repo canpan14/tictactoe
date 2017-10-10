@@ -23,12 +23,6 @@ main {
   margin: 0 auto;
 }
 
-.notification {
-  color: red;
-  margin: 0 auto;
-  text-align: center;
-}
-
 .playerTurn {
   margin: 0 auto;
   text-align: center;
@@ -41,8 +35,4 @@ main {
     height:100px;
     text-align: center;
     width:100px;
-}
-
-.successMessage {
-  color: #1cca1f;
 }

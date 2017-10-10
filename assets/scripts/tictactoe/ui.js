@@ -50,7 +50,6 @@ const deactivateButtons = function () {
 
 const clearBoard = function () {
   $('#notification').text('')
-  $('#successMessage').text('')
   const table = $('#gameBoard')[0]
   for (let i = 0; i < table.rows.length; i++) {
     for (let j = 0; j < table.rows[i].cells.length; j++) {
@@ -99,17 +98,6 @@ const redNotification = function (text, time = 1000) {
   })
 }
 
-const notificationMessage = function (text) {
-  $('#notification').text(text)
-}
-
-const successMessage = function (text, time) {
-  $('#successMessage').text(text)
-  setTimeout(() => {
-    $('#successMessage').text('')
-  }, time)
-}
-
 const clearSignInForm = function (event) {
   $(event.target).find('form')[0].reset()
 }
@@ -136,7 +124,7 @@ const onDraw = function () {
 
 const onSignUpSuccess = function (response) {
   $('#signUpModal').modal('hide')
-  successMessage('Sign Up Successful', 2000)
+  greenNotification('Sign Up Successful', 3000)
 }
 
 const onSignUpFailure = function (response) {
@@ -166,11 +154,8 @@ const onSignOutSuccess = function () {
   clearBoard()
   deactivateButtons()
   $('#playerTurnText').text('')
-  $('#gamesPlayed').text('')
-  $('#gamesFinished').text('')
   $('#notification').text('')
   $('#currentGameId').text('')
-  $('#successMessage').text('')
   $('#viewGameMessage').text('')
   $('.signedInLink').hide()
   $('.signedOutLink').show()
@@ -192,7 +177,7 @@ const onChangePasswordFailure = function (response) {
 }
 
 const onNewOfflineGameSuccess = function (response) {
-  notificationMessage('')
+  $('#failAlert').hide()
   $('#viewGameMessage').text('')
   store.game = response.game
   $('#currentGameId').text('Current Game Id: ' + store.game.id)
@@ -203,7 +188,7 @@ const onNewOfflineGameFailure = function (response) {
 }
 
 const onUpdateGameSuccess = function (response) {
-  notificationMessage('')
+  $('#failAlert').hide()
 }
 
 const onUpdateGameFailure = function (response) {
@@ -212,14 +197,13 @@ const onUpdateGameFailure = function (response) {
 
 const onGetGamesForUserSuccess = function (response) {
   const gamesFinished = response.games.filter(game => game.over === true).length
-  $('#gamesPlayed').text('Player has played ' + response.games.length + ' games')
-  $('#gamesFinished').text('Player has finished ' + gamesFinished + ' games')
+  $('#gamesPlayed').text('Games Played: ' + response.games.length)
+  $('#gamesFinished').text('Games Finished: ' + gamesFinished)
 }
 
 const onGetGamesForUserFailure = function (response) {
   redNotification('Failed to get user stats', 1000)
-  $('#gamesPlayed').text('')
-  $('#gamesFinished').text('')
+  $('#gamesPlayed').text('Could not retrieve user statistics')
 }
 
 const onJoinGameSuccess = function (response) {
@@ -233,7 +217,7 @@ const onJoinGameFailure = function (response) {
 }
 
 const onNewOnlineGameSuccess = function () {
-  notificationMessage('')
+  $('#failAlert').hide()
   $('#viewGameMessage').text('')
   $('#currentGameId').text('Current Game Id: ' + store.game.id)
 }
@@ -246,8 +230,7 @@ const onShowGameSuccess = function (response) {
   delete store.game
   $('#playerTurnText').text('')
   $('#currentGameId').text('')
-  $('#successMessage').text('')
-  notificationMessage('')
+  $('#failAlert').hide()
   $('#viewGameMessage').text('Viewing game ' + response.game.id)
   const gameBoardCells = $('#gameBoard td')
   for (let i = 0; i < gameBoardCells.length; i++) {
@@ -260,7 +243,7 @@ const onShowGameFailure = function (response) {
 }
 
 const onOnlineTimeout = function () {
-  notificationMessage('Game timed out')
+  $('#failAlert').show()
 }
 
 module.exports = {
@@ -274,8 +257,6 @@ module.exports = {
   onTurnChange,
   updateCell,
   clearBoard,
-  notificationMessage,
-  successMessage,
   clearSignInForm,
   clearSignUpForm,
   clearChangePasswordForm,
