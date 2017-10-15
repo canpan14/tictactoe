@@ -42,6 +42,9 @@ Biggest changes I would make in future iterations would really be entire overhal
 Also numerous areas where code should be encapsulated and more reusable.
 Knowing I was going to get this far in the project I should have planned out the code design with multiplayer in mind from the beginning.
 
+## Rewrite Using Bootstrap 4
+After completing the initial version I rewrote a large amount of the code to be organized more appropriatly. I also mirgrated the entire project to bootstrap 4, removed an amount of unused CSS, and redid the majority of the visual design.
+
 ## Wireframes
 Wireframes: https://imgur.com/a/cDV0p
 
